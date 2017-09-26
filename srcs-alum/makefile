@@ -13,6 +13,8 @@ target_name	:= prac
 # que se quieran enlazar para crear el ejecutable 'prac'. Por ejemplo:
 # Objeto3D, MallaInd, practica2, MallaRevol, MallaPLY, practica3, etc......
 # (para cada nombre habrá un archivo .cpp en 'srcs-alum')
+units_loc := Objeto3D
+
 
 units_alu := main practica1
 
