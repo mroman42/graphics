@@ -32,6 +32,9 @@ using namespace std ;
 // **
 // *********************************************************************
 
+// variable con el identificador del programa usado
+GLuint idProg;
+
 // variables que definen la posicion de la camara en coordenadas polares
 
 float
@@ -201,12 +204,13 @@ void DibujarObjetos()
 
 void FGE_Redibujado()
 {
-   using namespace std ;
+   using namespace std;
+   // TODO: glUseProgram(idProg);
    //cout << "redibujado......" << endl << flush ;
-   FijarViewportProyeccion() ; // necesario pues la escala puede cambiar
+   FijarViewportProyeccion(); // necesario, pues la escala puede cambiar
    FijarCamara();
    LimpiarVentana();
-   DibujarEjes() ;
+   DibujarEjes();
    DibujarObjetos();
    glutSwapBuffers();
 }
