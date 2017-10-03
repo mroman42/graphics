@@ -17,7 +17,7 @@ const int numModosVisu = 4;
 class ContextoVis {
 public:
   ModosVisu modoVisu; // modo de visualización actual
-  ContextoVis() { modoVisu = modoAlambre; } // poner alambre por defecto
+  ContextoVis() {modoVisu = modoAlambre;} // poner alambre por defecto
 };
 
 #endif

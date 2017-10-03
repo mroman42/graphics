@@ -19,7 +19,7 @@ public:
   std::string nombre();
 
   // Visualiza un objeto con el modo de visualización dado.
-  virtual void visualizar(ContextoVis& cv) = 0;
+  virtual void visualizarGL(ContextoVis& cv) = 0;
 };
 
 #endif

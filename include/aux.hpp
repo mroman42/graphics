@@ -54,7 +54,7 @@
 
 
 // activa uso de "generic vertex attributes"
-#define USAR_GVA
+//#define USAR_GVA
 
 // ignora advertencias por uso de funciones obsoletas (sirve en OSX)
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"

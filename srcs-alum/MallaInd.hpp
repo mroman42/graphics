@@ -18,7 +18,7 @@ protected:
 public:
   // Función de visualización de la malla, implementando el método
   // abstracto de un objeto3D.
-  void visualizar(ContextoVis& cv) override;
+  void visualizarGL(ContextoVis& cv) override;
 };
 
 #endif
