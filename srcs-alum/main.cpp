@@ -8,15 +8,19 @@
 // *********************************************************************
 
 // includes de C/C++
-
 #include <cctype>   // toupper
 #include <string>   // std::string
 #include <iostream> // std::cout
 #include <fstream>  // ifstream
 #include <cmath>    // fabs
 
+// Shaders
+#include <GL/glew.h>
+#include <GL/glut.h>
+
 // includes en ../include
 #include "aux.hpp"  // include cabeceras de opengl / glut / glut / glew
+#include "shaders.hpp"
 
 // includes de archivos en el directorio de trabajo (de las prácticas)
 #include "practicas.hpp"
@@ -70,8 +74,6 @@ unsigned modoVis; // modo de visualización actual
 // ** Funciones auxiliares:
 // **
 // *********************************************************************
-
-
 // fija la transformación de proyeccion (zona visible del mundo == frustum)
 
 void FijarProyeccion() {
@@ -184,10 +186,9 @@ void DibujarObjetos() {
 
 // F.G. del evento de redibujado (se produce cuando hay que volver a
 // dibujar la ventana, tipicamente tras producirse otros eventos)
-
 void FGE_Redibujado() {
    using namespace std;
-   //glUseProgram(idProg);
+   glUseProgram(idProg);
    cout << "redibujado......" << endl << flush;
    FijarViewportProyeccion(); // necesario, pues la escala puede cambiar
    FijarCamara();
@@ -199,7 +200,6 @@ void FGE_Redibujado() {
 
 // ---------------------------------------------------------------------
 // F.G. del evento de cambio de tamaño de la ventana
-
 void FGE_CambioTamano(int nuevoAncho, int nuevoAlto) {
    // guardar nuevo tamaño de la ventana
    ventana_tam_x  = nuevoAncho;
@@ -357,50 +357,65 @@ void Inicializa_Vars() {
 // ---------------------------------------------------------------------
 // inicialización de OpenGL
 
-void Inicializa_OpenGL()
-{
-   // borrar posibles errores anteriores
-   CError();
+void Inicializa_OpenGL() {
+  // Lee punteros a funciones 2.0+ con GLEW
+  GLenum codigoError = glewInit();
+  if (codigoError != GLEW_OK) {
+    std::cout << "Imposible inicializar 'Glew', mensaje: "
+              << glewGetErrorString(codigoError) << std::endl;
+    exit(1);
+  }
+  // comprueba en particular si OpenGL 2.0+ está soportado usando GLEW
+  if (!GLEW_VERSION_2_0) {
+    cout << "OpenGL 2.0 no soportado" << endl << flush;
+    exit(1);
+  }
+  ExigirGLEW("Error al exigir GLEW.");
+  
+  // borrar posibles errores anteriores
+  CError();
 
-   // habilitar test de comparación de profundidades para 3D (y 2D)
-   // es necesario, no está habilitado por defecto:
-   // https://www.opengl.org/wiki/Depth_Buffer
-   glEnable(GL_DEPTH_TEST);
+  // habilitar test de comparación de profundidades para 3D (y 2D)
+  // es necesario, no está habilitado por defecto:
+  // https://www.opengl.org/wiki/Depth_Buffer
+  glEnable(GL_DEPTH_TEST);
 
-   // establecer color de fondo: (1,1,1) (blanco)
-   glClearColor(1.0, 1.0, 1.0, 1.0);
+  // establecer color de fondo: (1,1,1) (blanco)
+  glClearColor(1.0, 1.0, 1.0, 1.0);
 
-   // establecer color inicial para todas las primitivas
-   glColor3f(0.7, 0.2, 0.4);
+  // establecer color inicial para todas las primitivas
+  glColor3f(0.7, 0.2, 0.4);
 
-   // establecer ancho de línea
-   glLineWidth(1.0);
+  // establecer ancho de línea
+  glLineWidth(1.0);
 
-   // establecer tamaño de los puntos
-   glPointSize(2.0);
+  // establecer tamaño de los puntos
+  glPointSize(2.0);
 
-   // establecer modo de visualización de prim.
-   // (las tres posibilidades son: GL_POINT, GL_LINE, GL_FILL)
-   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  // establecer modo de visualización de prim.
+  // (las tres posibilidades son: GL_POINT, GL_LINE, GL_FILL)
+  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-   // imprimir datos del hardware y la implementación de OpenGL
-   using namespace std;
-   cout  << "Datos de versión e implementación de OpenGL"                        << endl
-         << "  implementación de : " << glGetString(GL_VENDOR)                   << endl
-         << "  hardware          : " << glGetString(GL_RENDERER)                 << endl
-         << "  version de OpenGL : " << glGetString(GL_VERSION)                  << endl
-         << "  version de GLSL   : " << glGetString(GL_SHADING_LANGUAGE_VERSION) << endl
-         << flush;
+  // imprimir datos del hardware y la implementación de OpenGL
+  using namespace std;
+  cout  << "Datos de versión e implementación de OpenGL"                        << endl
+	<< "  implementación de : " << glGetString(GL_VENDOR)                   << endl
+	<< "  hardware          : " << glGetString(GL_RENDERER)                 << endl
+	<< "  version de OpenGL : " << glGetString(GL_VERSION)                  << endl
+	<< "  version de GLSL   : " << glGetString(GL_SHADING_LANGUAGE_VERSION) << endl
+	<< flush;
 
-   // ya está
-   CError();
+  // compilar shaders, crear programa
+  idProg = CrearPrograma("fragmentshader.glsl", "vertexshader.glsl");
+  
+  // ya está
+  CError();
 }
 
 // ---------------------------------------------------------------------
 // Código de inicialización (llama a los dos anteriores, entre otros)
 
-void Inicializar( int argc, char *argv[] )
-{
+void Inicializar(int argc, char *argv[]) {
    // inicializa las variables del programa
    Inicializa_Vars();
 
@@ -414,6 +429,9 @@ void Inicializar( int argc, char *argv[] )
    P1_Inicializar(argc, argv);
 }
 
+
+
+
 // *********************************************************************
 // **
 // ** Función principal
@@ -421,8 +439,7 @@ void Inicializar( int argc, char *argv[] )
 // *********************************************************************
 
 
-int main( int argc, char *argv[] )
-{
+int main(int argc, char *argv[]) {
    // incializar el programa
    Inicializar( argc, argv ) ;
 
