@@ -47,7 +47,6 @@ float camara_angulo_y;   // angulo de rotación entorno al eje Y
 // ---------------------------------------------------------------------
 // variables que definen el view-frustum (zona visible del mundo)
 
-
 float frustum_factor_escala;  // factor de escala homogeneo que se aplica al frustum
 float frustum_ancho;          // ancho, en coordenadas del mundo
 float frustum_dis_del;        // distancia al plano de recorte delantero (near)
@@ -202,8 +201,8 @@ void FGE_Redibujado() {
 // F.G. del evento de cambio de tamaño de la ventana
 void FGE_CambioTamano(int nuevoAncho, int nuevoAlto) {
    // guardar nuevo tamaño de la ventana
-   ventana_tam_x  = nuevoAncho;
-   ventana_tam_y  = nuevoAlto ;
+   ventana_tam_x = nuevoAncho;
+   ventana_tam_y = nuevoAlto;
 
    // forzar un nuevo evento de redibujado, para actualizar ventana
    glutPostRedisplay();
@@ -224,10 +223,17 @@ void FGE_PulsarTeclaNormal(unsigned char tecla, int x_raton, int y_raton) {
      modoVis++;
      modoVis %= numModosVisu;
      contextoVis.modoVisu = (ModosVisu) modoVis;
-     break;     
+     break;
+   case 'p':
+   case 'P':
+     // Cambia a la siguiente práctica
+     practicaActual %= NPRACTICAS;
+     practicaActual++;
+     break;
    case 'Q':
    case 27:
-     exit(0); break;
+     exit(0);
+     break;
    case '+' :
      frustum_factor_escala *= 1.05;
      break;
@@ -235,22 +241,27 @@ void FGE_PulsarTeclaNormal(unsigned char tecla, int x_raton, int y_raton) {
      frustum_factor_escala /= 1.05;
      break;
    default:
+     // Variable que indica si es necesario redibujar.
      redibujar = false;
      switch(practicaActual) {
      case 1:
-       redibujar = P1_FGE_PulsarTeclaNormal(tecla) ; // true si es necesario redibujar
+       redibujar = P1_FGE_PulsarTeclaNormal(tecla); 
+       break;
+     case 2:
+       redibujar = P2_FGE_PulsarTeclaNormal(tecla);
        break;
      default:
-       redibujar = false; // la tecla no es de la práctica activa (no es necesario redibujar)
+       // Cuando la tecla no es de la práctica activa no es necesario
+       // redibujar.
+       redibujar = false; 
      }
      break;
    }
    using namespace std;
    //cout << "tecla normal....." << frustum_factor_escala << endl ;
 
-   // si se ha cambiado algo, forzar evento de redibujado
-   if (redibujar)
-      glutPostRedisplay();
+   // Si se ha cambiado algo, se realiza el evento de redibujado.
+   if (redibujar) glutPostRedisplay();
 }
 
 // ---------------------------------------------------------------------
@@ -441,7 +452,7 @@ void Inicializar(int argc, char *argv[]) {
 
 int main(int argc, char *argv[]) {
    // incializar el programa
-   Inicializar( argc, argv ) ;
+   Inicializar(argc, argv);
 
    // llamar al bucle de gestión de eventos de glut, tiene el
    // control hasta el final de la aplicación

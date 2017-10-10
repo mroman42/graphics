@@ -12,9 +12,9 @@
 #include "aux.hpp"
 #include "tuplasg.hpp"
 
-void P1_Inicializar( int argc, char *argv[] ) ;
-bool P1_FGE_PulsarTeclaNormal(  unsigned char tecla ) ;
-void P1_DibujarObjetos( ContextoVis & cv ) ;
+void P1_Inicializar(int argc, char *argv[]);
+bool P1_FGE_PulsarTeclaNormal(unsigned char tecla);
+void P1_DibujarObjetos(ContextoVis & cv);
 
 class Cubo : public MallaInd {
 public:

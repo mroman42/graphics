@@ -15,6 +15,9 @@ protected:
   std::vector<Tupla3f> vertices;
   std::vector<Tupla3i> caras;
 
+  // TODO: Variable lógica que indica si se han creado los VBOs.
+  
+  
 public:
   // Función de visualización de la malla, implementando el método
   // abstracto de un objeto3D.
