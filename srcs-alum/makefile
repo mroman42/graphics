@@ -6,16 +6,14 @@
 
 ## ---------------------------------------------------------------------
 ## nombre del binario ejecutable y archivos a enlazar en 'srcs-alu'
-
-target_name	:= prac
+target_name := prac
 
 # nota: se debe añadir a 'units_loc' los nombres de las unidades de compilación
 # que se quieran enlazar para crear el ejecutable 'prac'. Por ejemplo:
 # Objeto3D, MallaInd, practica2, MallaRevol, MallaPLY, practica3, etc......
 # (para cada nombre habrá un archivo .cpp en 'srcs-alum')
-units_loc := Objeto3D MallaInd 
-
-units_alu := main practica1 MallaInd
+units_loc := 
+units_alu := main practica1 practica2 MallaInd MallaPLY MallaRevol Objeto3D
 
 ## ---------------------------------------------------------------------
 ## aspectos configurables

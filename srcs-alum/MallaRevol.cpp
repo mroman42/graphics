@@ -22,12 +22,12 @@ MallaRevol::MallaRevol(const std::string& nombre_arch,
     // Añade cada vértice del perfil colocado en el nuevo ángulo.
     for (int i=0; i<vnum; i++) {
       // Calcula la posición del nuevo vértice aplicando una rotación.
-      const px = plyv[i*3];
-      const py = plyv[i*3+1];
-      const pz = plyv[i*3+2];
-      const nx = cosp*px - senp*pz;
-      const ny = py;
-      const nz = cosp*pz + senp*px;
+      const float px = plyv[i*3];
+      const float py = plyv[i*3+1];
+      const float pz = plyv[i*3+2];
+      const float nx = cosp*px - senp*pz;
+      const float ny = py;
+      const float nz = cosp*pz + senp*px;
       vertices.push_back(Tupla3f(nx,ny,nz));
 
       // Une el perfil con el anterior mediante dos triángulos

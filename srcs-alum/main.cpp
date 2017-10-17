@@ -25,6 +25,7 @@
 // includes de archivos en el directorio de trabajo (de las prácticas)
 #include "practicas.hpp"
 #include "practica1.hpp"
+#include "practica2.hpp"
 
 // evita la necesidad de escribir std::
 using namespace std;
@@ -65,8 +66,12 @@ int ventana_tam_y; // alto inicial actual de la ventana, en pixels
 
 ContextoVis contextoVis; // contexto de visualización actual (modo de visualización)
 
+const unsigned NPRACTICAS = 2; // número de prácticas
 unsigned practicaActual; // practica actual (cambiable por teclado) (1,2,3,4,5)
 unsigned modoVis; // modo de visualización actual
+
+
+
 
 // *********************************************************************
 // **
@@ -170,6 +175,7 @@ void LimpiarVentana() {
 void DibujarObjetos() {
    switch(practicaActual) {
    case 1: P1_DibujarObjetos(contextoVis); break;
+   case 2: P2_DibujarObjetos(contextoVis); break;
    default :
      cout << "El valor de 'practicaActual' (" << practicaActual << ") es incorrecto" << endl;
      break ;
@@ -258,7 +264,7 @@ void FGE_PulsarTeclaNormal(unsigned char tecla, int x_raton, int y_raton) {
      break;
    }
    using namespace std;
-   //cout << "tecla normal....." << frustum_factor_escala << endl ;
+   //cout << "tecla normal....." << frustum_factor_escala << endl;
 
    // Si se ha cambiado algo, se realiza el evento de redibujado.
    if (redibujar) glutPostRedisplay();
@@ -436,8 +442,9 @@ void Inicializar(int argc, char *argv[]) {
    // opengl: define proyección y atributos iniciales
    Inicializa_OpenGL();
 
-   // inicializar práctica 1.
+   // inicializar prácticas
    P1_Inicializar(argc, argv);
+   P2_Inicializar(argc, argv);
 }
 
 

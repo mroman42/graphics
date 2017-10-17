@@ -2,6 +2,7 @@
 #define MALLAREVOL_H
 
 #include "MallaInd.hpp"
+#include "file_ply_stl.hpp"
 #include <string>
 
 class MallaRevol : public MallaInd {
