@@ -7,11 +7,6 @@ void MallaInd::visualizarGL(ContextoVis& cv) {
   if (cv.modoVisu == modoPuntos or
       cv.modoVisu == modoAlambre or
       cv.modoVisu == modoSolido) {
-    
-    // Prepara el array de vértices e indica sobre él la
-    // posición inicial y el sentido que llevará.
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glVertexPointer(3, GL_FLOAT, 0, vertices[0]);
 
     // Escoge el modo de visualización dentro de los tres modos posibles
     // desde este punto. La variable se usará en "glPolygonMode".
@@ -22,6 +17,11 @@ void MallaInd::visualizarGL(ContextoVis& cv) {
     case modoSolido:  polygonmode = GL_FILL;  break;
     default: break;
     }
+    
+    // Prepara el array de vértices e indica sobre él la
+    // posición inicial y el sentido que llevará.
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(3, GL_FLOAT, 0, vertices[0]);
     glPolygonMode(GL_FRONT_AND_BACK, polygonmode);
 
     // Dibuja el array de vértices indicando los índices de los
@@ -73,6 +73,12 @@ void MallaInd::crearVBOs() {
 
   // Crea un VBO con la tabla de triángulos
   id_vbo_tri = VBO_Crear(GL_ELEMENT_ARRAY_BUFFER, tam_tri, caras.data());
+
+  // Crea un VBO con los colores de los vértices
+  if (col_ver.size() > 0)
+    id_vbo_col_ver = VBO_Crear(GL_ARRAY_BUFFER, tam_ver, col_ver.data());
+  if (nor_ver.size() > 0)
+    id_vbo_nor_ver = VBO_Crear(GL_ARRAY_BUFFER, tam_ver, nor_ver.data());
 }
 
 void MallaInd::visualizarVBOs() {
@@ -89,4 +95,23 @@ void MallaInd::visualizarVBOs() {
 
   // Desactiva el uso de arrays de vértices
   glDisableClientState(GL_VERTEX_ARRAY);
+}
+
+
+void MallaInd::visualizarVBOsAtrVer() {
+  if (col_ver.size() > 0) {
+    glBindBuffer(GL_ARRAY_BUFFER, id_vbo_col_ver);
+    glColorPointer(3, GL_FLOAT, 0, 0);
+    glEnableClientState(GL_COLOR_ARRAY);
+  }
+  if (nor_ver.size() > 0) {
+    glBindBuffer(GL_ARRAY_BUFFER, id_vbo_nor_ver);
+    glNormalPointer(GL_FLOAT, 0, 0);
+    glEnableClientState(GL_NORMAL_ARRAY);
+  }
+
+  visualizarVBOs();
+
+  glDisableClientState(GL_COLOR_ARRAY);
+  glDisableClientState(GL_NORMAL_ARRAY);
 }

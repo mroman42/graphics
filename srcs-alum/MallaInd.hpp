@@ -14,12 +14,16 @@ protected:
   // los vértices y las caras de la malla.
   std::vector<Tupla3f> vertices;
   std::vector<Tupla3i> caras;
+  std::vector<unsigned> col_ver;
+  std::vector<unsigned> nor_ver;
 
   // Variable lógica que indica si se han creado los VBOs y datos que
   // se añaden para identificar los VBOs y su tamaño.
   bool vbos_creados; // Indica si se han creado los VBOs.
   GLuint id_vbo_ver; // Identifica el VBO con la tabla de vértices.
   GLuint id_vbo_tri; // Identifica el VBO con la tabla de triángulos.
+  GLuint id_vbo_col_ver; // Identifica el VBO con los colores de vértices.
+  GLuint id_vbo_nor_ver; // Identifica el VBO con las normales de vértices.
   unsigned tam_ver; // Tamaño de la tabla de vértices.
   unsigned tam_tri; // Tamaño de la tabla de triángulos.
   unsigned num_ver; // Número de vértices
@@ -33,6 +37,7 @@ public:
   // Creación y visualización de los VBOs
   void crearVBOs();
   void visualizarVBOs();
+  void visualizarVBOsAtrVer();
   
   // Constructor de una malla indexada
   MallaInd(){
