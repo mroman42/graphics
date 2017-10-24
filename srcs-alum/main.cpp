@@ -41,7 +41,6 @@ using namespace std;
 GLuint idProg;
 
 // variables que definen la posicion de la camara en coordenadas polares
-
 float camara_angulo_x;   // angulo de rotación entorno al eje X
 float camara_angulo_y;   // angulo de rotación entorno al eje Y
 
@@ -240,6 +239,19 @@ void FGE_PulsarTeclaNormal(unsigned char tecla, int x_raton, int y_raton) {
    case 27:
      exit(0);
      break;
+   case 'V':
+   case 'v':
+     // Cambia el modo diferido
+     if (contextoVis.modoVbos) {
+       contextoVis.modoVbos = false;
+       cout << "Modo diferido: desactivado" << endl;
+     }
+     else {
+       contextoVis.modoVbos = true;
+       cout << "Modo diferido: activado" << endl;
+     }
+     break;
+     
    case '+' :
      frustum_factor_escala *= 1.05;
      break;

@@ -17,7 +17,12 @@ const int numModosVisu = 4;
 class ContextoVis {
 public:
   ModosVisu modoVisu; // modo de visualización actual
-  ContextoVis() {modoVisu = modoAlambre;} // poner alambre por defecto
+  bool modoVbos; // modo diferido para visualización de mallas
+  
+  ContextoVis(){
+    modoVisu = modoAlambre; // poner alambre por defecto
+    modoVbos = false; // no usar modo diferido por defecto
+  }
 };
 
 #endif

@@ -59,3 +59,34 @@ void MallaInd::visualizarGL(ContextoVis& cv) {
     glDisableClientState(GL_VERTEX_ARRAY);
   }
 }
+
+void MallaInd::crearVBOs() {
+  // Calcula el tamaño de la tabla de vértices y la tabla de
+  // triángulos
+  num_ver = vertices.size();
+  num_tri = caras.size();
+  tam_ver = sizeof(float) * 3L * num_ver;
+  tam_tri = sizeof(unsigned) * 3L * num_tri;
+  
+  // Crea un VBO conteniendo una tabla de vértices
+  id_vbo_ver = VBO_Crear(GL_ARRAY_BUFFER, tam_ver, vertices.data());
+
+  // Crea un VBO con la tabla de triángulos
+  id_vbo_tri = VBO_Crear(GL_ELEMENT_ARRAY_BUFFER, tam_tri, caras.data());
+}
+
+void MallaInd::visualizarVBOs() {
+  // Especifica el formato de los vértices en su VBO
+  glBindBuffer(GL_ARRAY_BUFFER, id_vbo_ver); // indica VBO que se usaa
+  glVertexPointer(3,GL_FLOAT,0,0); // indica formato y offset
+  glBindBuffer(GL_ARRAY_BUFFER, 0); // desactiva buffer
+  glEnableClientState(GL_VERTEX_ARRAY);
+
+  // Visualización usando glDrawElements
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_vbo_tri); // indica buffer triángulos
+  glDrawElements(GL_TRIANGLES, 3L*num_tri, GL_UNSIGNED_INT, NULL); // visualiza
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // desactiva buffer
+
+  // Desactiva el uso de arrays de vértices
+  glDisableClientState(GL_VERTEX_ARRAY);
+}
