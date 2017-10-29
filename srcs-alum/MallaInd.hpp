@@ -14,8 +14,10 @@ protected:
   // los vértices y las caras de la malla.
   std::vector<Tupla3f> vertices;
   std::vector<Tupla3i> caras;
-  std::vector<unsigned> col_ver;
-  std::vector<unsigned> nor_ver;
+  std::vector<Tupla3f> nor_ver;
+  std::vector<Tupla3f> nor_tri;
+  std::vector<Tupla3f> col_ver;
+  std::vector<Tupla3f> col_tri;
 
   // Variable lógica que indica si se han creado los VBOs y datos que
   // se añaden para identificar los VBOs y su tamaño.
@@ -38,6 +40,7 @@ public:
   void crearVBOs();
   void visualizarVBOs();
   void visualizarVBOsAtrVer();
+  GLuint VBO_Crear(GLuint tipo, GLuint tamanio, GLvoid* puntero);
   
   // Constructor de una malla indexada
   MallaInd(){
@@ -45,16 +48,6 @@ public:
   }
 };
 
-GLuint VBO_Crear(GLuint tipo, GLuint tamanio, GLvoid* puntero) {
-  assert(tipo == GL_ARRAY_BUFFER or tipo == GL_ELEMENT_ARRAY_BUFFER);
-  
-  GLuint id_vbo; // identificador de VBO
-  glGenBuffers(1, &id_vbo); // crea nuevo VBO asociado a identificador
-  glBindBuffer(tipo, id_vbo); // activa el nuevo VBO
-  glBufferData(tipo, tamanio, puntero, GL_STATIC_DRAW); // transfiere RAM->CPU
-  glBindBuffer(tipo, 0); // desactiva el VBO
 
-  return id_vbo;
-}
 
 #endif

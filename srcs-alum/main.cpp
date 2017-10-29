@@ -27,6 +27,8 @@
 #include "practica1.hpp"
 #include "practica2.hpp"
 
+#include "MallaInd.hpp"
+
 // evita la necesidad de escribir std::
 using namespace std;
 
@@ -67,7 +69,7 @@ ContextoVis contextoVis; // contexto de visualización actual (modo de visualiza
 
 const unsigned NPRACTICAS = 2; // número de prácticas
 unsigned practicaActual; // practica actual (cambiable por teclado) (1,2,3,4,5)
-unsigned modoVis; // modo de visualización actual
+unsigned modoVis = 1; // modo de visualización actual
 
 
 
@@ -163,14 +165,12 @@ void DibujarEjes() {
 
 // ---------------------------------------------------------------------
 // asigna el color de fondo actual a todos los pixels de la ventana
-
 void LimpiarVentana() {
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 // ---------------------------------------------------------------------
 // dibuja los objetos de la escena
-
 void DibujarObjetos() {
    switch(practicaActual) {
    case 1: P1_DibujarObjetos(contextoVis); break;

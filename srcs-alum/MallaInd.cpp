@@ -18,13 +18,14 @@ void MallaInd::visualizarGL(ContextoVis& cv) {
     default: break;
     }
 
+    glPolygonMode(GL_FRONT_AND_BACK, polygonmode);
+    
     // Considera si está activado o no el modo VBOs.
     if (not cv.modoVbos) {
       // Prepara el array de vértices e indica sobre él la
       // posición inicial y el sentido que llevará.
       glEnableClientState(GL_VERTEX_ARRAY);
       glVertexPointer(3, GL_FLOAT, 0, vertices[0]);
-      glPolygonMode(GL_FRONT_AND_BACK, polygonmode);
 
       // Dibuja el array de vértices indicando los índices de los
       // triángulos que se dibujarán. Esto es más eficiente que repetir
@@ -53,22 +54,37 @@ void MallaInd::visualizarGL(ContextoVis& cv) {
     for (unsigned int i=0; i<caras.size(); i++)
       ((i%2 == 0)? caras_pares : caras_impares).push_back(caras[i]);
 
-    // Prepara el array de vértices e indica sobre él la
-    // posición inicial y el sentido que llevará.
-    // Señala además la forma de dibujarlo.
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glVertexPointer(3, GL_FLOAT, 0, vertices[0]);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+    // Considera si está activado o no el modo VBOs
+    if (not cv.modoVbos) {
+      // Prepara el array de vértices e indica sobre él la
+      // posición inicial y el sentido que llevará.
+      // Señala además la forma de dibujarlo.
+      glEnableClientState(GL_VERTEX_ARRAY);
+      glVertexPointer(3, GL_FLOAT, 0, vertices[0]);
+      glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     
-    // Fija dos colores distintos para dibujar las caras según sean caras
-    // o caras impares. Necesita dos llamadas a glDrawElements.
-    glColor3f(0.2, 0.2, 0.2);
-    glDrawElements(GL_TRIANGLES, caras_pares.size()*3, GL_UNSIGNED_INT, caras_pares[0]);
-    glColor3f(0.8, 0.8, 0.8);
-    glDrawElements(GL_TRIANGLES, caras_impares.size()*3, GL_UNSIGNED_INT, caras_impares[0]);
+      // Fija dos colores distintos para dibujar las caras según sean caras
+      // o caras impares. Necesita dos llamadas a glDrawElements.
+      glColor3f(0.2, 0.2, 0.2);
+      glDrawElements(GL_TRIANGLES, caras_pares.size()*3, GL_UNSIGNED_INT, caras_pares[0]);
+      glColor3f(0.8, 0.8, 0.8);
+      glDrawElements(GL_TRIANGLES, caras_impares.size()*3, GL_UNSIGNED_INT, caras_impares[0]);
     
-    // Deja de usar el array de vértices.
-    glDisableClientState(GL_VERTEX_ARRAY);
+      // Deja de usar el array de vértices.
+      glDisableClientState(GL_VERTEX_ARRAY);
+    }
+    else {
+      // Crea los VBOs si no están ya creados
+      if (not vbos_creados) {
+	crearVBOs();
+	vbos_creados = true;
+      }
+
+      glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+      visualizarVBOsAtrVer();
+    }
   }
 }
 
@@ -79,7 +95,7 @@ void MallaInd::crearVBOs() {
   num_tri = caras.size();
   tam_ver = sizeof(float) * 3L * num_ver;
   tam_tri = sizeof(unsigned) * 3L * num_tri;
-  
+
   // Crea varios VBO conteniendo
   //  1. una tabla de vértices
   //  2. una tabla de triángulos
@@ -124,4 +140,17 @@ void MallaInd::visualizarVBOsAtrVer() {
 
   glDisableClientState(GL_COLOR_ARRAY);
   glDisableClientState(GL_NORMAL_ARRAY);
+}
+
+
+GLuint MallaInd::VBO_Crear(GLuint tipo, GLuint tamanio, GLvoid* puntero)  {
+  assert(tipo == GL_ARRAY_BUFFER or tipo == GL_ELEMENT_ARRAY_BUFFER);
+  
+  GLuint id_vbo; // identificador de VBO
+  glGenBuffers(1, &id_vbo); // crea nuevo VBO asociado a identificador
+  glBindBuffer(tipo, id_vbo); // activa el nuevo VBO
+  glBufferData(tipo, tamanio, puntero, GL_STATIC_DRAW); // transfiere RAM->CPU
+  glBindBuffer(tipo, 0); // desactiva el VBO
+
+  return id_vbo;
 }
