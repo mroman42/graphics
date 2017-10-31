@@ -14,10 +14,6 @@
 #include <fstream>  // ifstream
 #include <cmath>    // fabs
 
-// Shaders
-#include <GL/glew.h>
-#include <GL/glut.h>
-
 // includes en ../include
 #include "aux.hpp"  // include cabeceras de opengl / glut / glut / glew
 #include "shaders.hpp"
@@ -387,19 +383,9 @@ void Inicializa_Vars() {
 // inicialización de OpenGL
 
 void Inicializa_OpenGL() {
-  // Lee punteros a funciones 2.0+ con GLEW
-  GLenum codigoError = glewInit();
-  if (codigoError != GLEW_OK) {
-    std::cout << "Imposible inicializar 'Glew', mensaje: "
-              << glewGetErrorString(codigoError) << std::endl;
-    exit(1);
-  }
-  // comprueba en particular si OpenGL 2.0+ está soportado usando GLEW
-  if (!GLEW_VERSION_2_0) {
-    cout << "OpenGL 2.0 no soportado" << endl << flush;
-    exit(1);
-  }
+  #ifdef LINUX
   ExigirGLEW("Error al exigir GLEW.");
+  #endif
   
   // borrar posibles errores anteriores
   CError();
