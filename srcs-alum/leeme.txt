@@ -1,4 +1,42 @@
-## leeme.txt
-## Prácticas 1 y 2 IG GIM (17-18).
-## Mario Román García.
+leeme.txt
+Prácticas 1 y 2 IG GIM (17-18).
+Mario Román García.
 
+
+= PRÁCTICA 1 =
+
+Se ha utilizado programación con cauce gráfico. Los nombres de los
+archivos fuente del shader son
+
+ - fragmentshader.glsl, y
+ - vertexshader.glsl.
+
+Se ha usado un editor de texto en lugar de un entorno de desarrollo
+completo. El sistema operativo y editor usado es
+
+  GNU/LINUX, núcleo 4.13.7-1-ARCH, ArchLinux.
+  GNU Emacs 26.0.
+
+El código se restringe a los dos objetos descritos en el guion.
+
+
+= PRÁCTICA 2 =
+
+Se ha implementado la visualización en modo diferido (con VBOs) y la
+funcionalidad descrita por el guion.
+
+
+= TECLAS =
+
+Descritas por el guion:
+
+ - tecla m/M: Cambia el modo de visualización;
+ - tecla p/P: Cambia la práctica activa;
+ - tecla o/O: Cambia el objeto activo;
+ - teclas de cursos: Rotaciones en torno al origen;
+ - teclas +/-/avpag/repag: Control del zoom;
+ - teclas q/Q/esc: Salir del programa.
+
+Añadidas:
+
+ - tecla v/V: Activa y desactiva el modo diferido.
