@@ -2,7 +2,11 @@
 #define PARAMETRO_H
 
 #include <string>
+#include <functional>
 #include "matrizg.hpp"
+
+typedef std::function<Matriz4f(float)> TFunctionCMF;
+
 
 class Parametro {
 private:
@@ -32,7 +36,18 @@ public:
   // Crea un grado de libertad desde sus datos.
   Parametro(const std::string& descripcion, Matriz4f* p_ptr_mat,
 	    TFuncionCMF p_fcm, bool p_acotado,
-	    float p_c, float p_s, float p_f);
+	    float p_c, float p_s, float p_f) {
+    this.descripcion = descripcion;
+    this.ptr_mat = p_ptr_mat;
+    this.fun_calculo_matriz = p_fcm;
+    this.acotado = p_acotado;
+    this.c = p_c;
+    this.s = p_s;
+    this.f = p_f;
+
+    valor_norm = 0;
+    velocidad = 0;
+  }
 
   void siguiente_cuadro();
   void reset();
