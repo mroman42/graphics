@@ -1,6 +1,8 @@
 #ifndef NODOGRAFOESCENA_H
 #define NODOGRAFOESCENA_H
 
+#include <vector>
+#include "aux.hpp"
 #include "Objeto3D.hpp"
 #include "matrices-tr.hpp"
 
@@ -18,8 +20,14 @@ struct EntradaNGE {
   };
 
   // Constructores de los dos tipos distintos
-  EntradaNGE(Objeto3D* pObjeto);
-  EntradaNGE(const Matriz4f& pMatriz);
+  EntradaNGE(Objeto3D* pObjeto)
+    : tipoE(0), objeto(pObjeto)
+  {};
+  EntradaNGE(const Matriz4f& pMatriz)
+    :tipoE(1)
+  {
+    matriz = new Matriz4f(pMatriz);
+  };
 };
 
 // Nodos de grafo de escena.

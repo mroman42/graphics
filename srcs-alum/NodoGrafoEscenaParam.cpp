@@ -7,3 +7,9 @@ int NodoGrafoEscenaParam::numParametros() {
 Parametro* NodoGrafoEscenaParam::leerPtrParametro(unsigned i) {
   return &parametros[i];
 }
+
+void NodoGrafoEscenaParam::siguienteCuadro() {
+  for (Parametro param : parametros) {
+    param.siguiente_cuadro();
+  }
+}

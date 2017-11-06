@@ -1,6 +1,7 @@
 #ifndef NODOGRAFOESCENAPARAM_H
 #define NODOGRAFOESCENAPARAM_H
 
+#include "NodoGrafoEscena.hpp"
 #include "Parametro.hpp"
 
 class NodoGrafoEscenaParam : public NodoGrafoEscena {

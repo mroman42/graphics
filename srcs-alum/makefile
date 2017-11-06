@@ -13,7 +13,7 @@ target_name := prac
 # Objeto3D, MallaInd, practica2, MallaRevol, MallaPLY, practica3, etc......
 # (para cada nombre habrá un archivo .cpp en 'srcs-alum')
 units_loc := 
-units_alu := main practica1 practica2 MallaInd MallaPLY MallaRevol Objeto3D
+units_alu := main practica1 practica2 practica3 MallaInd MallaPLY MallaRevol Objeto3D Parametro NodoGrafoEscena NodoGrafoEscenaParam ObjetoPractica3
 
 ## ---------------------------------------------------------------------
 ## aspectos configurables

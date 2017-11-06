@@ -1,5 +1,4 @@
 #include "NodoGrafoEscena.hpp"
-#include <vector>
 
 void NodoGrafoEscena::visualizarGL(ContextoVis& cv) {
   glMatrixMode(GL_MODELVIEW);
@@ -25,13 +24,15 @@ void NodoGrafoEscena::visualizarGL(ContextoVis& cv) {
 
 
 void NodoGrafoEscena::agregar(EntradaNGE* entrada) {
-  entradas.push_back(entrada);
+  entradas.push_back(*entrada);
 }
 
 void NodoGrafoEscena::agregar(Objeto3D* pObjeto) {
-  agregar(EntradaNGE(pObjeto));
+  EntradaNGE* nueva = new EntradaNGE(pObjeto);
+  agregar(nueva);
 }
 
 void NodoGrafoEscena::agregar(const Matriz4f& pMatriz) {
-  agregar(EntradaNGE(pMatriz));
+  EntradaNGE* nueva = new EntradaNGE(pMatriz);
+  agregar(nueva);
 }

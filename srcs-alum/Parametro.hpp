@@ -5,11 +5,22 @@
 #include <functional>
 #include "matrizg.hpp"
 
-typedef std::function<Matriz4f(float)> TFunctionCMF;
+typedef std::function<Matriz4f(float)> TFuncionCMF;
+
+
 
 
 class Parametro {
 private:
+  // Constantes globales para todos los parámetros
+  // Constante de aceleración
+  static constexpr const float a = 1;
+  // Constante de incremento
+  static constexpr const float delta = 1;
+  // Constante de velocidad inicial
+  static constexpr const float velocidadinicial = 0;
+
+  
   // Descripción de un parámetro.
   const std::string descripcion;
 
@@ -36,17 +47,17 @@ public:
   // Crea un grado de libertad desde sus datos.
   Parametro(const std::string& descripcion, Matriz4f* p_ptr_mat,
 	    TFuncionCMF p_fcm, bool p_acotado,
-	    float p_c, float p_s, float p_f) {
-    this.descripcion = descripcion;
-    this.ptr_mat = p_ptr_mat;
-    this.fun_calculo_matriz = p_fcm;
-    this.acotado = p_acotado;
-    this.c = p_c;
-    this.s = p_s;
-    this.f = p_f;
-
+	    float p_c, float p_s, float p_f) :
+    descripcion(descripcion),
+    acotado(p_acotado),
+    fun_calculo_matriz(p_fcm),
+    c(p_c),
+    s(p_s),
+    f(p_f),
+    ptr_mat(p_ptr_mat)
+  {
     valor_norm = 0;
-    velocidad = 0;
+    velocidad = velocidadinicial;
   }
 
   void siguiente_cuadro();
