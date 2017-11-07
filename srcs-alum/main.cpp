@@ -329,7 +329,7 @@ void FGE_PulsarTeclaEspecial( int tecla, int x_raton, int y_raton ) {
 void FGE_Desocupado() {
   bool desactivar = true;
   if (practicaActual == 3)
-    desactivar =! P3_FGE_Desocupado();
+    desactivar = not P3_FGE_Desocupado();
   if (desactivar)
     glutIdleFunc(nullptr);
 }
@@ -342,7 +342,6 @@ void FGE_Desocupado() {
 // *********************************************************************
 
 // inicialización de GLUT: creación de la ventana, designar FGEs
-
 void Inicializa_GLUT(int argc, char * argv[]) {
    // inicializa variables globales usadas en esta función (y otras)
    ventana_pos_x = 50;

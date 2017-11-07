@@ -25,8 +25,9 @@ bool P3_FGE_PulsarTeclaNormal(unsigned char tecla) {
     else {
       std::cout << "Activa animaciones" << std::endl;
       p3_animaciones = true;
+      glutIdleFunc(FGE_Desocupado);
     }
-    FGE_Desocupado();
+
     return true;
   }
   else if (tecla == 'g' or tecla == 'G') {

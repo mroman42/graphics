@@ -4,16 +4,16 @@ void NodoGrafoEscena::visualizarGL(ContextoVis& cv) {
   glMatrixMode(GL_MODELVIEW);
   glPushMatrix();
 
-  for (unsigned i=0; i<entradas.size(); i++) {
-    if (entradas[i].tipoE == 0) {
+  for (EntradaNGE& entrada : entradas) {
+    if (entrada.tipoE == 0) {
       // Si la entrada es un subobjeto, lo visualiza
-      entradas [i].objeto -> visualizarGL(cv);
+      entrada.objeto -> visualizarGL(cv);
     }
     else {
       // Si la entrada es una matriz, entra en modo modelview y la
       // compone.
       glMatrixMode(GL_MODELVIEW);
-      glMultMatrixf(*(entradas[i].matriz));
+      glMultMatrixf(*(entrada.matriz));
     }
   }
 

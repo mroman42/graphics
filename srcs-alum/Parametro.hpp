@@ -18,7 +18,7 @@ private:
   // Constante de incremento
   static constexpr const float delta = 1;
   // Constante de velocidad inicial
-  static constexpr const float velocidadinicial = 0;
+  static constexpr const float velocidadinicial = 1;
 
   
   // Descripción de un parámetro.
@@ -56,8 +56,7 @@ public:
     f(p_f),
     ptr_mat(p_ptr_mat)
   {
-    valor_norm = 0;
-    velocidad = velocidadinicial;
+    reset();
   }
 
   void siguiente_cuadro();

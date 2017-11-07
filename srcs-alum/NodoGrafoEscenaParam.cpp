@@ -9,7 +9,6 @@ Parametro* NodoGrafoEscenaParam::leerPtrParametro(unsigned i) {
 }
 
 void NodoGrafoEscenaParam::siguienteCuadro() {
-  for (Parametro param : parametros) {
+  for (Parametro& param : parametros)
     param.siguiente_cuadro();
-  }
 }
