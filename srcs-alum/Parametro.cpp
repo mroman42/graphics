@@ -1,12 +1,8 @@
 #include "Parametro.hpp"
 
 void Parametro::siguiente_cuadro() {
-  std::cout << "Valor normal: " << valor_norm << std::endl;
-  std::cout << "Velocidad: " << velocidad << std::endl;
   valor_norm = valor_norm + velocidad;
-  std::cout << "Valor normal: " << valor_norm << std::endl;
   *ptr_mat = fun_calculo_matriz(leer_valor_actual());
-  std::cout << "Parámetro " << descripcion << " recalculado a: " << leer_valor_actual() << std::endl;
 }
 
 void Parametro::reset() {
