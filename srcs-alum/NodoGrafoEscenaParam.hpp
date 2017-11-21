@@ -5,10 +5,9 @@
 #include "Parametro.hpp"
 
 class NodoGrafoEscenaParam : public NodoGrafoEscena {
-protected:
-  std::vector<Parametro> parametros;
-
 public:
+  std::vector<Parametro> parametros;
+  
   // Devuelve el número de parámetros
   int numParametros();
 

@@ -18,7 +18,7 @@ float Parametro::leer_valor_actual() {
   if (not acotado)
     return c + s * valor_norm;
   else
-    return c + s * sin(f * 2 * M_PI * valor_norm);
+    return c + s * sin(f * 2 * M_PI * valor_norm + shift);
 }
 
 float Parametro::leer_velocidad_actual() {

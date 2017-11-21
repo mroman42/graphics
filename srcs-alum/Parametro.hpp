@@ -36,6 +36,7 @@ private:
   const float c; // valor inicial del parámetro
   const float s; // semiamplitud o factor de escala
   const float f; // frecuencia
+  const float shift; // desplazamiento respecto a lo inicial
 
   // Puntero a una matriz dentro del modelo.
   Matriz4f* const ptr_mat;
@@ -47,13 +48,14 @@ public:
   // Crea un grado de libertad desde sus datos.
   Parametro(const std::string& descripcion, Matriz4f* p_ptr_mat,
 	    TFuncionCMF p_fcm, bool p_acotado,
-	    float p_c, float p_s, float p_f) :
+	    float p_c, float p_s, float p_f, float p_shift) :
     descripcion(descripcion),
     acotado(p_acotado),
     fun_calculo_matriz(p_fcm),
     c(p_c),
     s(p_s),
     f(p_f),
+    shift(p_shift),
     ptr_mat(p_ptr_mat)
   {
     reset();
