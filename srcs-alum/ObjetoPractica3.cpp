@@ -4,35 +4,26 @@ ObjetoPractica3::ObjetoPractica3() {
   // Nombra el objeto
   nombre_objeto = "Escena de la práctica 3";
 
-  // Agrega objetos al grafo de escena
-  // agregar(Matriz4f(MAT_Rotacion(60.0, 1.0, 0.0, 0.0)));
-
-  // Objeto3D* cilindro = new MallaRevol("cilindro.ply", 6, true, true);
-  // agregar(cilindro);
-
-  // Matriz4f* ptr_matriz_rotacion_base = entradas[0].matriz;
-  // Parametro rotacion_base("rotación de la base",
-  // 			  ptr_matriz_rotacion_base,
-  // 			  [=](float v) {return MAT_Rotacion(v, 1.0, 0.0, 0.0);},
-  // 			  true, 30.0, 30.0, 0.005);
-  // parametros.push_back(rotacion_base);
-
-  Objeto3D* caballo = new Caballo();
-  agregar(caballo);
-
-  agregar(Matriz4f(MAT_Rotacion(0.0, 1.0, 0.0, 0.0)));
-  Matriz4f* ptr_matriz_rotacion_base = entradas[1].matriz;
+  // Parámetro principal de rotación
+  agregar(Matriz4f(MAT_Rotacion(0.0, 0.0, 1.0, 0.0)));
+  Matriz4f* ptr_matriz_rotacion_base = entradas[0].matriz;
   Parametro rotacion_base("rotación de la base",
   			  ptr_matriz_rotacion_base,
   			  [=](float v) {return MAT_Rotacion(v, 0.0, 1.0, 0.0);},
   			  false, 0.0, 0.5, 1);
   parametros.push_back(rotacion_base);
-  
-  Objeto3D* rotor = new Rotor();
-  //agregar(Matriaz4f(MAT_Traslacion(0,-0.2,0)));
 
   // Rotor
+  Objeto3D* rotor = new Rotor();
   agregar(rotor);
+  
+  // // Parámetro de traslación del caballito sobre el poste
+  // Matriz4f* ptr_matriz_traslacion_caballito = entradas[2].matriz;
+  // Parametro vertical_caballito("movimiento vertical del caballito",
+  // 			  ptr_matriz_traslacion_caballito,
+  // 			  [=](float v) {return MAT_Traslacion(0.0, v, 0.0);},
+  // 			  true, 0.15, 0.15, 1);
+  // parametros.push_back(vertical_caballito);
 }
 
 Rotor::Rotor() {
@@ -59,27 +50,40 @@ Base::Base() {
 
 Columnas::Columnas() {
   nombre_objeto = "Estructura de columnas";
-  Objeto3D* columna_central = new Columna(0,0);
-  Objeto3D* columna_1 = new Columna(0,0.4);
-  Objeto3D* columna_2 = new Columna(0,-0.4);
-  Objeto3D* columna_3 = new Columna(0.34641016151377546,0.2);
-  Objeto3D* columna_4 = new Columna(0.34641016151377546,-0.2);
-  Objeto3D* columna_5 = new Columna(-0.34641016151377546,0.2);
-  Objeto3D* columna_6 = new Columna(-0.34641016151377546,-0.2);
+  Objeto3D* columna_central = new Columna();
+  Objeto3D* poste_1 = new Poste(0,0.4,0);
+  Objeto3D* poste_2 = new Poste(0,-0.4,180);
+  Objeto3D* poste_3 = new Poste(0.34641016151377546,0.2,60);
+  Objeto3D* poste_4 = new Poste(0.34641016151377546,-0.2,120);
+  Objeto3D* poste_5 = new Poste(-0.34641016151377546,0.2,300);
+  Objeto3D* poste_6 = new Poste(-0.34641016151377546,-0.2,240);
 
   agregar(columna_central);
-  agregar(columna_1);
-  agregar(columna_2);
-  agregar(columna_3);
-  agregar(columna_4);
-  agregar(columna_5);
-  agregar(columna_6);
+  agregar(poste_1);
+  agregar(poste_2);
+  agregar(poste_3);
+  agregar(poste_4);
+  agregar(poste_5);
+  agregar(poste_6);
 }
 
-Columna::Columna(float x, float z) {
+Poste::Poste(float x,float z, float angle) {
+  nombre_objeto = "Poste";  
+  
+  Objeto3D* columna = new Columna();
+  agregar(Matriz4f(MAT_Traslacion(x,0,z)));
+  agregar(columna);
+
+  Objeto3D* caballito = new Caballito();
+  agregar(Matriz4f(MAT_Traslacion(0,0.15,0)));
+  agregar(Matriz4f(MAT_Escalado(0.08,0.08,0.08)));
+  agregar(Matriz4f(MAT_Rotacion(angle,0,1,0)));
+  agregar(caballito);
+}
+
+Columna::Columna() {
   nombre_objeto = "Columna";
   Objeto3D* cilindro = new MallaRevol("cilindro.ply", 24, true, true);
-  agregar(Matriz4f(MAT_Traslacion(x,0,z)));
   agregar(Matriz4f(MAT_Traslacion(0,0.35,0)));
   agregar(Matriz4f(MAT_Escalado(0.03,0.7,0.03)));
   agregar(cilindro);
@@ -91,7 +95,7 @@ Cilindro::Cilindro() {
   agregar(cilindro);
 }
 
-Caballo::Caballo() {
+Caballito::Caballito() {
   nombre_objeto = "Caballito";
   Objeto3D* caballito = new MallaPLY("cow.ply");
   agregar(caballito);
