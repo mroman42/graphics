@@ -30,6 +30,10 @@ protected:
   unsigned tam_tri; // Tamaño de la tabla de triángulos.
   unsigned num_ver; // Número de vértices
   unsigned num_tri; // Número de triángulos
+
+  float color_r = 0.0; // color en rojo
+  float color_g = 0.0; // color en verde
+  float color_b = 0.0; // color en azul
   
 public:
   // Función de visualización de la malla, implementando el método
@@ -40,11 +44,15 @@ public:
   void crearVBOs();
   void visualizarVBOs();
   void visualizarVBOsAtrVer();
+  void darColor(float r, float g, float b);
   GLuint VBO_Crear(GLuint tipo, GLuint tamanio, GLvoid* puntero);
   
   // Constructor de una malla indexada
-  MallaInd(){
+  MallaInd() : color_r(0), color_g(0), color_b(0) {
     vbos_creados = false; // por defecto, no están creados
+    color_r = 0.0;
+    color_g = 0.0;
+    color_b = 0.0;
   }
 };
 

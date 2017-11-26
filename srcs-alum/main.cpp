@@ -289,8 +289,6 @@ void FGE_PulsarTeclaNormal(unsigned char tecla, int x_raton, int y_raton) {
 // parámetros:
 //       tecla: código GLUT de la tecla pulsada
 //       x_raton, y_raton : posición del ratón al pulsar
-
-
 void FGE_PulsarTeclaEspecial( int tecla, int x_raton, int y_raton ) {
    bool redisp = true;
    const float da = 5.0; // incremento en grados de ángulos de camara

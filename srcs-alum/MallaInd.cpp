@@ -19,6 +19,10 @@ void MallaInd::visualizarGL(ContextoVis& cv) {
     }
 
     glPolygonMode(GL_FRONT_AND_BACK, polygonmode);
+
+    // Color en el modo sólido
+    if (cv.modoVisu == modoSolido)
+      glColor3f(color_r, color_g, color_b);
     
     // Considera si está activado o no el modo VBOs.
     if (not cv.modoVbos) {
@@ -26,7 +30,7 @@ void MallaInd::visualizarGL(ContextoVis& cv) {
       // posición inicial y el sentido que llevará.
       glEnableClientState(GL_VERTEX_ARRAY);
       glVertexPointer(3, GL_FLOAT, 0, vertices[0]);
-
+      
       // Dibuja el array de vértices indicando los índices de los
       // triángulos que se dibujarán. Esto es más eficiente que repetir
       // varias veces un mismo punto (glDrawArrays) y que realizar una
@@ -86,6 +90,12 @@ void MallaInd::visualizarGL(ContextoVis& cv) {
       visualizarVBOsAtrVer();
     }
   }
+}
+
+void MallaInd::darColor(float r, float g, float b) {
+  color_r = r;
+  color_g = g;
+  color_b = b;
 }
 
 void MallaInd::crearVBOs() {

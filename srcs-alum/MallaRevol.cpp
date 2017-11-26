@@ -3,11 +3,14 @@
 MallaRevol::MallaRevol(const std::string& nombre_arch,
 		       const unsigned nperfiles,
 		       const bool crear_tapas,
-		       const bool cerrar_malla) {
+		       const bool cerrar_malla) : MallaInd() {
   // Extrae los puntos que generarán los vértices.
   std::vector<float> plyv;
   ply::read_vertices(nombre_arch.c_str(), plyv);
   int vnum = plyv.size()/3;
+  darColor(0.0,0.0,0.0);
+
+  std::cerr << "Creado con: " << color_r << " " << color_b  << " " << color_g << std::endl;
 
   // La figura de revolución se extrae generando un número determinado
   // de perfiles, cada uno de ellos a distinto ángulo. Estos perfiles

@@ -29,8 +29,10 @@ ObjetoPractica3::ObjetoPractica3() {
 
 Estructura::Estructura() {
   nombre_objeto = "Estructura del tiovivo";
-  Objeto3D* suelo = new MallaRevol("cilindro.ply", 6, true, true);
-  Objeto3D* carpa = new MallaRevol("cono.ply",12,true,true);
+  MallaInd* suelo = new MallaRevol("cilindro.ply", 6, true, true);
+  MallaInd* carpa = new MallaRevol("cono.ply",12,true,true);
+  suelo->darColor(0.9,0.3,0.3);
+  carpa->darColor(0.9,0.3,0.3);
 
   agregar(MAT_Traslacion(0,-0.05,0));
   agregar(MAT_Escalado(1.2,0.1,1.2));
@@ -59,7 +61,8 @@ Rotor::Rotor() {
 
 Base::Base() {
   nombre_objeto = "Base";
-  Objeto3D* base = new MallaRevol("cilindro.ply", 12, true, true);
+  MallaInd* base = new MallaRevol("cilindro.ply", 12, true, true);
+  base -> darColor(0.8,0.4,0.4);
   agregar(Matriz4f(MAT_Escalado(1,0.05,1)));
   agregar(base);
 }
@@ -107,8 +110,8 @@ Poste::Poste(float x,float z, float angle, int inicialmente) {
   // Parámetro de traslación del caballito sobre el poste
   Matriz4f* ptr_matriz_traslacion_caballito = entradas[2].matriz;
   Parametro vertical_caballito("movimiento vertical del caballito",
-  			  ptr_matriz_traslacion_caballito,
-  			  [=](float v) {return MAT_Traslacion(0.0, v, 0.0);},
+			       ptr_matriz_traslacion_caballito,
+			       [=](float v) {return MAT_Traslacion(0.0, v, 0.0);},
 			       true, 0.15, 0.13, 0.006, inicialmente*M_PI/2);
   parametros.push_back(vertical_caballito);
 
@@ -123,20 +126,22 @@ Poste::Poste(float x,float z, float angle, int inicialmente) {
 
 Columna::Columna() {
   nombre_objeto = "Columna";
-  Objeto3D* cilindro = new MallaRevol("cilindro.ply", 24, true, true);
+  MallaInd* cilindro = new MallaRevol("cilindro.ply", 24, true, true);
   agregar(Matriz4f(MAT_Traslacion(0,0.35,0)));
   agregar(Matriz4f(MAT_Escalado(0.03,0.7,0.03)));
+  cilindro -> darColor(0.4,0.4,0.4);
   agregar(cilindro);
 }
 
 Cilindro::Cilindro() {
   nombre_objeto = "Cilindro";
-  Objeto3D* cilindro = new MallaRevol("cilindro.ply", 24, true, true);
+  MallaInd* cilindro = new MallaRevol("cilindro.ply", 24, true, true);
   agregar(cilindro);
 }
 
 Caballito::Caballito() {
   nombre_objeto = "Caballito";
-  Objeto3D* caballito = new MallaPLY("cow.ply");
+  MallaInd* caballito = new MallaPLY("cow.ply");
+  caballito->darColor(0.8,0.8,0.8);
   agregar(caballito);
 }
