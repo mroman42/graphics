@@ -4,6 +4,10 @@ ObjetoPractica3::ObjetoPractica3() {
   // Nombra el objeto
   nombre_objeto = "Escena de la práctica 3";
 
+  // Estructura exterior del tiovivo
+  NodoGrafoEscenaParam* estructura = new Estructura();
+  agregar(estructura);
+  
   // Rotor principal
   agregar(Matriz4f(MAT_Rotacion(0.0, 0.0, 1.0, 0.0)));
   NodoGrafoEscenaParam* rotor = new Rotor();
@@ -11,7 +15,7 @@ ObjetoPractica3::ObjetoPractica3() {
   
   
   // Parámetro de rotación general
-  Matriz4f* ptr_matriz_rotacion_base = entradas[0].matriz;
+  Matriz4f* ptr_matriz_rotacion_base = entradas[1].matriz;
   Parametro rotacion_base("rotación de la base",
   			  ptr_matriz_rotacion_base,
   			  [=](float v) {return MAT_Rotacion(v, 0.0, 1.0, 0.0);},
@@ -22,6 +26,19 @@ ObjetoPractica3::ObjetoPractica3() {
   std::cout << "Añadidos " << rotor->parametros.size() << " parametros" << std::endl;
   for (Parametro p : rotor->parametros) parametros.push_back(p);
 }
+
+Estructura::Estructura() {
+  nombre_objeto = "Estructura del tiovivo";
+  Objeto3D* suelo = new MallaRevol("cilindro.ply", 6, true, true);
+  Objeto3D* carpa = new MallaRevol("cono.ply",12,true,true);
+
+  agregar(MAT_Traslacion(0,-0.05,0));
+  agregar(MAT_Escalado(1.2,0.1,1.2));
+  agregar(suelo);
+  agregar(MAT_Escalado(1,2.2,1));
+  agregar(MAT_Traslacion(0,4,0));
+  agregar(carpa);
+};
 
 Rotor::Rotor() {
   nombre_objeto = "Rotor";
@@ -92,8 +109,16 @@ Poste::Poste(float x,float z, float angle, int inicialmente) {
   Parametro vertical_caballito("movimiento vertical del caballito",
   			  ptr_matriz_traslacion_caballito,
   			  [=](float v) {return MAT_Traslacion(0.0, v, 0.0);},
-			       true, 0.15, 0.15, 0.01, inicialmente*M_PI/2);
+			       true, 0.15, 0.13, 0.006, inicialmente*M_PI/2);
   parametros.push_back(vertical_caballito);
+
+  // Parámetro de cabeceo del caballito sobre el poste
+  Matriz4f* ptr_matriz_cabeceo_caballito = entradas[4].matriz;
+  Parametro cabeceo_caballito("movimiento de cabeceo del caballio",
+			      ptr_matriz_cabeceo_caballito,
+			      [=](float v) {return MAT_Rotacion(v,0,1,0);},
+			      true, angle, 30, 0.002, 0);
+  parametros.push_back(cabeceo_caballito);
 }
 
 Columna::Columna() {
