@@ -2,10 +2,16 @@
 
 // Objeto de la práctica
 static ObjetoPractica3* objeto_practica_3 = nullptr;
+static int grado_libertad_actual = 0;
+static int grados_libertad = 0;
+
 
 void P3_Inicializar() {
   // Asigna al puntero el objeto de la práctica 3
   objeto_practica_3 = new ObjetoPractica3();
+
+  // Calcula grados de libertad
+  grados_libertad = objeto_practica_3->numParametros();
 }
 
 void P3_DibujarObjetos(ContextoVis& cv) {
@@ -31,24 +37,65 @@ bool P3_FGE_PulsarTeclaNormal(unsigned char tecla) {
     return true;
   }
   else if (tecla == 'g' or tecla == 'G') {
+    // Activa el grado de libertad siguiente al actual
+    grado_libertad_actual++;
+    grado_libertad_actual = grado_libertad_actual % grados_libertad;
+
+    std::cout << "Grado de libertad " << grado_libertad_actual << ": ";
+    std::cout << objeto_practica_3->leerPtrParametro(grado_libertad_actual) -> leer_descripcion();
+    std::cout << std::endl;
     return true;
   }
   else if (tecla == 'r' or tecla == 'R') {
+    // Desactiva animaciones
+    std::cout << "Desactiva animaciones" << std::endl;
+    p3_animaciones = false;
+
+    // Resetea todos los parámetros del modelo
+    std::cout << "Resetea los parámetros del modelo" << std::endl;
+    for (Parametro& p : objeto_practica_3->parametros) {
+      p.reset();
+    }
+    
     return true;
   }
   else if (tecla == '<') {
-    // Con las animaciones activadas, aumenta o disminuye la velocidad
-    // del grado de libertad actual.
+    // Con las animaciones activadas, aumenta la velocidad del grado
+    // de libertad actual.
     if (p3_animaciones) {
-      
+      objeto_practica_3->leerPtrParametro(grado_libertad_actual)->acelerar();
+      std::cerr << "Velocidad actual: "
+		<< objeto_practica_3->leerPtrParametro(grado_libertad_actual)->leer_velocidad_actual()
+                << std::endl;
     }
-    // Con las animaciones desactivadas, incrementa o disminuye el
-    // grado de libertad actual.
+    // Con las animaciones desactivadas, incrementa el grado de
+    // libertad actual.
     else {
+      objeto_practica_3->leerPtrParametro(grado_libertad_actual)->incrementar();
+      std::cerr << "Valor actual: "
+		<< objeto_practica_3->leerPtrParametro(grado_libertad_actual)->leer_valor_actual()
+	        << std::endl;
     }
     return true;
   }
   else if (tecla == '>') {
+    // Con las animaciones activadas, disminuye la velocidad del grado
+    // de libertad actual.
+    if (p3_animaciones) {
+      objeto_practica_3->leerPtrParametro(grado_libertad_actual)->decelerar();
+      std::cerr << "Velocidad actual: "
+		<< objeto_practica_3->leerPtrParametro(grado_libertad_actual)->leer_velocidad_actual()
+                << std::endl;
+    }
+    // Con las animaciones desactivadas, decrementa el grado de
+    // libertad actual.
+    else {
+      objeto_practica_3->leerPtrParametro(grado_libertad_actual)->decrementar();
+      std::cerr << "Valor actual: "
+		<< objeto_practica_3->leerPtrParametro(grado_libertad_actual)->leer_valor_actual()
+	        << std::endl;
+    }
+    
     return true;
   }
   

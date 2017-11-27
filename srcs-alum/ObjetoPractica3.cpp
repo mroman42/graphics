@@ -23,7 +23,6 @@ ObjetoPractica3::ObjetoPractica3() {
   parametros.push_back(rotacion_base);
 
   // Parámetros de nodos hijo
-  std::cout << "Añadidos " << rotor->parametros.size() << " parametros" << std::endl;
   for (Parametro p : rotor->parametros) parametros.push_back(p);
 }
 
@@ -70,12 +69,12 @@ Base::Base() {
 Columnas::Columnas() {
   nombre_objeto = "Estructura de columnas";
   NodoGrafoEscenaParam* columna_central = new Columna();
-  NodoGrafoEscenaParam* poste_1 = new Poste(0,0.4,0,1);
-  NodoGrafoEscenaParam* poste_2 = new Poste(0,-0.4,180,-1);
-  NodoGrafoEscenaParam* poste_3 = new Poste(0.34641016151377546,0.2,60,0);
-  NodoGrafoEscenaParam* poste_4 = new Poste(0.34641016151377546,-0.2,120,1);
-  NodoGrafoEscenaParam* poste_5 = new Poste(-0.34641016151377546,0.2,300,-1);
-  NodoGrafoEscenaParam* poste_6 = new Poste(-0.34641016151377546,-0.2,240,0);
+  NodoGrafoEscenaParam* poste_1 = new Poste(1,0,0.4,0,1);
+  NodoGrafoEscenaParam* poste_2 = new Poste(2,0,-0.4,180,-1);
+  NodoGrafoEscenaParam* poste_3 = new Poste(3,0.34641016151377546,0.2,60,0);
+  NodoGrafoEscenaParam* poste_4 = new Poste(4,0.34641016151377546,-0.2,120,1);
+  NodoGrafoEscenaParam* poste_5 = new Poste(5,-0.34641016151377546,0.2,300,-1);
+  NodoGrafoEscenaParam* poste_6 = new Poste(6,-0.34641016151377546,-0.2,240,0);
 
   agregar(columna_central);
   agregar(poste_1);
@@ -94,8 +93,8 @@ Columnas::Columnas() {
   for (Parametro p : poste_6->parametros) parametros.push_back(p);
 }
 
-Poste::Poste(float x,float z, float angle, int inicialmente) {
-  nombre_objeto = "Poste";  
+Poste::Poste(int num, float x,float z, float angle, int inicialmente) {
+  nombre_objeto = "poste " + std::to_string(num);
   
   NodoGrafoEscenaParam* columna = new Columna();
   agregar(Matriz4f(MAT_Traslacion(x,0,z)));
@@ -109,7 +108,7 @@ Poste::Poste(float x,float z, float angle, int inicialmente) {
 
   // Parámetro de traslación del caballito sobre el poste
   Matriz4f* ptr_matriz_traslacion_caballito = entradas[2].matriz;
-  Parametro vertical_caballito("movimiento vertical del caballito",
+  Parametro vertical_caballito("movimiento vertical del caballito del " + nombre_objeto,
 			       ptr_matriz_traslacion_caballito,
 			       [=](float v) {return MAT_Traslacion(0.0, v, 0.0);},
 			       true, 0.15, 0.13, 0.006, inicialmente*M_PI/2);
@@ -117,7 +116,7 @@ Poste::Poste(float x,float z, float angle, int inicialmente) {
 
   // Parámetro de cabeceo del caballito sobre el poste
   Matriz4f* ptr_matriz_cabeceo_caballito = entradas[4].matriz;
-  Parametro cabeceo_caballito("movimiento de cabeceo del caballio",
+  Parametro cabeceo_caballito("movimiento de cabeceo del caballito del " + nombre_objeto,
 			      ptr_matriz_cabeceo_caballito,
 			      [=](float v) {return MAT_Rotacion(v,0,1,0);},
 			      true, angle, 30, 0.002, 0);

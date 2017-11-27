@@ -5,7 +5,10 @@ int NodoGrafoEscenaParam::numParametros() {
 }
 
 Parametro* NodoGrafoEscenaParam::leerPtrParametro(unsigned i) {
-  return &parametros[i];
+  if (i < numParametros())
+    return &parametros[i];
+  else
+    return nullptr;
 }
 
 void NodoGrafoEscenaParam::siguienteCuadro() {

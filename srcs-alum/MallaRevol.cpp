@@ -10,8 +10,6 @@ MallaRevol::MallaRevol(const std::string& nombre_arch,
   int vnum = plyv.size()/3;
   darColor(0.0,0.0,0.0);
 
-  std::cerr << "Creado con: " << color_r << " " << color_b  << " " << color_g << std::endl;
-
   // La figura de revolución se extrae generando un número determinado
   // de perfiles, cada uno de ellos a distinto ángulo. Estos perfiles
   // serán unidos por caras que se añadirán uniendo cada perfil con el

@@ -16,7 +16,7 @@ private:
   // Constante de aceleración
   static constexpr const float a = 1;
   // Constante de incremento
-  static constexpr const float delta = 1;
+  static constexpr const float delta = 10;
   // Constante de velocidad inicial
   static constexpr const float velocidadinicial = 1;
 

@@ -10,7 +10,7 @@ class Estructura : public NodoGrafoEscenaParam {public: Estructura();};
 class Rotor : public NodoGrafoEscenaParam {public: Rotor();};
 class Base : public NodoGrafoEscenaParam {public: Base();};
 class Columna : public NodoGrafoEscenaParam{public: Columna();};
-class Poste : public NodoGrafoEscenaParam{public: Poste(float,float,float,int);};
+class Poste : public NodoGrafoEscenaParam{public: Poste(int,float,float,float,int);};
 class Columnas : public NodoGrafoEscenaParam{public: Columnas();};
 class Cilindro : public NodoGrafoEscenaParam{public: Cilindro();};
 class Caballito : public NodoGrafoEscenaParam{public: Caballito();};

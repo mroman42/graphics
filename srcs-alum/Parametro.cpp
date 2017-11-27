@@ -34,9 +34,11 @@ void Parametro::decelerar() {
 }
 
 void Parametro::incrementar() {
-  valor_norm = valor_norm + delta;
+  valor_norm += delta;
+  *ptr_mat = fun_calculo_matriz(leer_valor_actual());
 }
 
 void Parametro::decrementar() {
-  valor_norm = valor_norm - delta;
+  valor_norm -= delta;
+  *ptr_mat = fun_calculo_matriz(leer_valor_actual());
 }
