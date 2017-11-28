@@ -191,7 +191,7 @@ void DibujarObjetos() {
 void FGE_Redibujado() {
    using namespace std;
    glUseProgram(idProg);
-   cout << "redibujado......" << endl << flush;
+   //cout << "redibujado......" << endl << flush;
    FijarViewportProyeccion(); // necesario, pues la escala puede cambiar
    FijarCamara();
    LimpiarVentana();
