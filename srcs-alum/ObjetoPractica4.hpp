@@ -5,6 +5,8 @@
 #include "MallaRevol.hpp"
 #include "MallaPLY.hpp"
 #include "Material.hpp"
+#include "MaterialEstandar.hpp"
+#include "FuenteLuz.hpp"
 
 class ObjetoPractica4 : public NodoGrafoEscenaParam {
 public:
@@ -16,30 +18,14 @@ public:
   void disminuirBeta();
 };
 
-class MaterialLata : public MaterialEstandar {
-public:
-  MaterialLata();
-};
+class MaterialLata : public MaterialEstandar { public: MaterialLata(); };
+class MaterialTapasLata : public MaterialEstandar { public: MaterialTapasLata(); };
+class MaterialPeonMadera : public MaterialEstandar { public: MaterialPeonMadera(); };
+class MaterialPeonBlanco : public MaterialEstandar { public: MaterialPeonBlanco(); };
+class MaterialPeonNegro : public MaterialEstandar { public: MaterialPeonNegro(); };
 
-class MaterialTapasLata : public MaterialEstandar {
-public:
-  MaterialTapasLata();
+class Fuente1 : public FuenteLuz {
+  Fuente1();
 };
-
-class MaterialPeonMadera : public MaterialEstandar {
-public:
-  MaterialPeonMadera();
-};
-
-class MaterialPeonBlanco : public MaterialEstandar {
-public:
-  MaterialPeonBlanco();
-};
-
-class MaterialPeonNegro : public MaterialEstandar {
-public:
-  MaterialPeonNegro();
-};
-
 
 #endif

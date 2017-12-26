@@ -10,6 +10,27 @@ MallaRevol::MallaRevol(const std::string& nombre_arch,
   int vnum = plyv.size()/3;
   darColor(0.0,0.0,0.0);
 
+  // Distancias para medir las coordenadas de textura
+  std::vector<float> distancias;
+  for (unsigned i=0; i < vnum; i++) {
+    if (i == 0)
+      // d_0 = 0
+      distancias.push_back(0); 
+    else {
+      // d_{j+1} = d_j + || p_{j+1} - p_j ||
+      const float px = plyv[i*3];
+      const float py = plyv[i*3+1];
+      const float pz = plyv[i*3+2];
+      const float pax = plyv[(i-1)*3];
+      const float pay = plyv[(i-1)*3+1];
+      const float paz = plyv[(i-1)*3+2];
+      distancias.push_back(
+	distancias[i-1] +
+	sqrt((Tupla3f(px,py,pz) - Tupla3f(pax,pay,paz)).lengthSq())
+      );
+    }
+  }
+  
   // La figura de revolución se extrae generando un número determinado
   // de perfiles, cada uno de ellos a distinto ángulo. Estos perfiles
   // serán unidos por caras que se añadirán uniendo cada perfil con el
@@ -30,6 +51,11 @@ MallaRevol::MallaRevol(const std::string& nombre_arch,
       const float ny = py;
       const float nz = cosp*pz + senp*px;
       vertices.push_back(Tupla3f(nx,ny,nz));
+
+      // Coordenadas de textura del vértice
+      const float si = j / (nperfiles - 1);
+      const float ti = distancias[j] / distancias[vnum-1];
+      cctt.push_back(Tupla2f(si,ti));
 
       // Une el perfil con el anterior mediante dos triángulos
       // que se unen formando una cara con el siguiente vértice.

@@ -90,7 +90,43 @@ void MallaInd::visualizarGL(ContextoVis& cv) {
       visualizarVBOsAtrVer();
     }
   }
+
+  // Modo sombreado plano
+  else if (cv.modoVisu == modoIluminacionPlano) {
+    visualizarGL_Textura(cv);
+  }
+
+  // Modo con iluminación y sombreado suave (Gouroud)
+  else if (cv.modoVisu == modoIluminacionSuave) {
+    glShadeModel(GL_SMOOTH);
+    
+  }
 }
+
+void MallaInd::visualizarGL_Textura(ContextoVis& cv) {
+  // Sombreado plano (deprecated?)
+  // glShadeModel(GL_FLAT);
+
+  // Array de vértices y normales
+  glVertexPointer(3, GL_FLOAT, 0, vertices[0]);
+  glTexCoordPointer(2, GL_FLOAT, 0, cctt[0]);
+  glNormalPointer(GL_FLOAT, 0, nor_ver[0]);
+
+  // Activa modos
+  // glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+  glEnableClientState(GL_VERTEX_ARRAY);
+  glEnableClientState(GL_NORMAL_ARRAY);
+  glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    
+  // Dibuja
+  glDrawElements(GL_TRIANGLES, caras.size()*3, GL_UNSIGNED_INT, caras[0]);
+    
+  // Desactiva modos
+  glDisableClientState(GL_VERTEX_ARRAY);
+  glDisableClientState(GL_NORMAL_ARRAY);
+  glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
 
 void MallaInd::darColor(float r, float g, float b) {
   color_r = r;
@@ -163,4 +199,38 @@ GLuint MallaInd::VBO_Crear(GLuint tipo, GLuint tamanio, GLvoid* puntero)  {
   glBindBuffer(tipo, 0); // desactiva el VBO
 
   return id_vbo;
+}
+
+
+void MallaInd::calcularNormales() {
+  // Calcula la tabla de normales de las caras y los vértices usando
+  // las tablas de caras y vértices.
+  nor_tri.resize(caras.size(), Tupla3f(0,0,0));
+  nor_ver.resize(vertices.size(), Tupla3f(0,0,0));
+
+  // Tabla de normales de las caras
+  for (int i = 0; i < caras.size(); i++) {
+    Tupla3i cara = caras[i];
+    Tupla3f p = vertices[cara[0]];
+    Tupla3f q = vertices[cara[1]];
+    Tupla3f r = vertices[cara[2]];
+    Tupla3f a = q - p;
+    Tupla3f b = r - p;
+    Tupla3f m = a.cross(b);
+    Tupla3f n = m.normalized();
+
+    nor_tri[i] = n;
+  }
+
+  // Tabla de normales de los vértices. Suma a los tres vértices
+  // asociados a cada cara y termina normalizando todo.
+  for (int i = 0; i < caras.size(); i++) {
+    Tupla3i cara = caras[i];
+    nor_ver[cara[0]] = nor_ver[cara[0]] + nor_tri[i];
+    nor_ver[cara[1]] = nor_ver[cara[1]] + nor_tri[i];
+    nor_ver[cara[2]] = nor_ver[cara[2]] + nor_tri[i];
+  }
+  for (int i = 0; i < nor_ver.size(); i++) {
+    nor_ver[i] = nor_ver[i].normalized();
+  }
 }
