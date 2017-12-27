@@ -11,7 +11,9 @@ void P4_Inicializar() {
 
 void P4_DibujarObjetos(ContextoVis& cv) {
   // Visualiza el único objeto de la práctica 4
+  glEnable(GL_LIGHTING);
   objeto_practica_4 -> visualizarGL(cv);
+  glDisable(GL_LIGHTING);
 }
 
 bool P4_FGE_PulsarTeclaNormal(unsigned char tecla) {

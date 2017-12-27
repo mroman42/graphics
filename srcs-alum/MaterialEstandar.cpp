@@ -11,12 +11,18 @@ void MaterialEstandar::activar() {
   glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, color[3]); // especular
   glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, exponente); // exponente
 
-  // Habilitación de textura para los materiales que la llevan
-  if (textura == NULL)
-    glDisable(GL_TEXTURE_2D);
-  else {
-    glEnable(GL_TEXTURE_2D);
-    textura -> activar();
-  }
+  // Asociación de colores del material al color actual
+  glColorMaterial(GL_FRONT_AND_BACK, GL_EMISSION);
+  glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT);
+  glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
+  glColorMaterial(GL_FRONT_AND_BACK, GL_SPECULAR);
+  glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+
+  glEnable(GL_COLOR_MATERIAL);
   
+  // Habilitación de textura para los materiales que la llevan
+  if (textura == nullptr)
+    glDisable(GL_TEXTURE_2D);
+  else
+    textura -> activar(); 
 }

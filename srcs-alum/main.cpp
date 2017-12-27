@@ -78,7 +78,6 @@ unsigned modoVis = 1; // modo de visualización actual
 // **
 // *********************************************************************
 // fija la transformación de proyeccion (zona visible del mundo == frustum)
-
 void FijarProyeccion() {
    const GLfloat ratioYX = GLfloat(ventana_tam_y) / GLfloat(ventana_tam_x);
 

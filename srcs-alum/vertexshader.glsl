@@ -1,3 +1,5 @@
+#version 130
+
 void main() {
   // El objetivo es escribir estas variables:
   //  - gl_Position, posición del vértice en pantalla,

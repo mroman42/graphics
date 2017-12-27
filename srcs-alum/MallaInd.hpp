@@ -38,7 +38,8 @@ protected:
   float color_b = 0.0; // color en azul
 
   // Visualiza con normales y coordenadas de textura
-  void visualizarGL_Textura(ContextoVis& cv); 
+  void visualizarGL_Textura(ContextoVis& cv);
+  void visualizarGL_Textura_VBOs(ContextoVis& cv);
   
 public:
   // Función de visualización de la malla, implementando el método

@@ -86,43 +86,55 @@ void MallaInd::visualizarGL(ContextoVis& cv) {
       }
 
       glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
       visualizarVBOsAtrVer();
     }
   }
 
   // Modo sombreado plano
   else if (cv.modoVisu == modoIluminacionPlano) {
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glShadeModel(GL_FLAT);
     visualizarGL_Textura(cv);
   }
 
   // Modo con iluminación y sombreado suave (Gouroud)
   else if (cv.modoVisu == modoIluminacionSuave) {
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glShadeModel(GL_SMOOTH);
-    
+    visualizarGL_Textura(cv);    
   }
 }
 
 void MallaInd::visualizarGL_Textura(ContextoVis& cv) {
-  // Sombreado plano (deprecated?)
-  // glShadeModel(GL_FLAT);
-
-  // Array de vértices y normales
+  // Activa modos para enviar arrays de vértices, normales y texturas
   glVertexPointer(3, GL_FLOAT, 0, vertices[0]);
   glTexCoordPointer(2, GL_FLOAT, 0, cctt[0]);
   glNormalPointer(GL_FLOAT, 0, nor_ver[0]);
 
-  // Activa modos
-  // glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_NORMAL_ARRAY);
   glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    
-  // Dibuja
+
   glDrawElements(GL_TRIANGLES, caras.size()*3, GL_UNSIGNED_INT, caras[0]);
     
-  // Desactiva modos
   glDisableClientState(GL_VERTEX_ARRAY);
+  glDisableClientState(GL_NORMAL_ARRAY);
+  glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
+void MallaInd::visualizarGL_Textura_VBOs(ContextoVis& cv) {
+  // Activa VBOs de coordenadas de normales
+  glBindBuffer(GL_ARRAY_BUFFER, id_vbo_nor_ver);
+  glNormalPointer(GL_FLOAT, 0, 0);
+  glEnableClientState(GL_NORMAL_ARRAY);
+
+  // Actva VBOs de coordenadas de textura
+  glBindBuffer(GL_ARRAY_BUFFER, id_vbo_cctt);
+  glTexCoordPointer(2, GL_FLOAT, 0, 0);
+  glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+  visualizarVBOs();
+
   glDisableClientState(GL_NORMAL_ARRAY);
   glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
@@ -216,10 +228,7 @@ void MallaInd::calcularNormales() {
     Tupla3f r = vertices[cara[2]];
     Tupla3f a = q - p;
     Tupla3f b = r - p;
-    Tupla3f m = a.cross(b);
-    Tupla3f n = m.normalized();
-
-    nor_tri[i] = n;
+    nor_tri[i] = (a.cross(b)).normalized();
   }
 
   // Tabla de normales de los vértices. Suma a los tres vértices
