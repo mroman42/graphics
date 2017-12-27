@@ -5,6 +5,7 @@
 #include "Objeto3D.hpp"
 #include "ObjetoPractica4.hpp"
 #include "aux.hpp"
+#include <string>
 
 // El objeto jerárquico a visualizar se crea en memoria dinámica y se
 // guarda en una variable de la práctica.

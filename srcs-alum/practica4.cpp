@@ -19,18 +19,30 @@ void P4_DibujarObjetos(ContextoVis& cv) {
 bool P4_FGE_PulsarTeclaNormal(unsigned char tecla) {
   if (tecla == 'g' or tecla == 'G') {
     // Conmutar entre ángulo alpha y ángulo beta
-    if (angulo_actual == 0) angulo_actual = 1;
-    if (angulo_actual == 1) angulo_actual = 0;
+    if (angulo_actual == 0) {
+      std::cout << "Ángulo actual: beta" << std::endl;
+      angulo_actual = 1;
+      return true;
+    }
+    else if (angulo_actual == 1) {
+      std::cout << "Ángulo actual: alpha" << std::endl;
+      angulo_actual = 0;
+      return true;
+    }
   }
   else if (tecla == '<') {
     // Aumentar valor de ángulo actual
+    std::cout << "Aumenta ángulo" << std::endl;
     if (angulo_actual == 0) objeto_practica_4->aumentarAlpha();
     if (angulo_actual == 1) objeto_practica_4->aumentarBeta();
+    return true;
   }
   else if (tecla == '>') {
     // Disminuir valor de ángulo actual
+    std::cout << "Disminuye ángulo" << std::endl;
     if (angulo_actual == 0) objeto_practica_4->disminuirAlpha();
     if (angulo_actual == 1) objeto_practica_4->disminuirBeta();
+    return true;
   }
   
   return false;

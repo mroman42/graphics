@@ -10,7 +10,9 @@ public:
   std::vector<FuenteLuz*> fuentes;
 
   // Activa todas las fuentes de luz de la colección
-  void activar(); 
+  void activar();
+
+  ColeccionFL();
 };
 
 #endif

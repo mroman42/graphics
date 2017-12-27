@@ -7,11 +7,18 @@
 #include "Material.hpp"
 #include "MaterialEstandar.hpp"
 #include "FuenteLuz.hpp"
+#include "FuenteDireccional.hpp"
+#include "FuentePosicional.hpp"
+#include "ColeccionFL.hpp"
 
 class ObjetoPractica4 : public NodoGrafoEscenaParam {
 public:
-  ObjetoPractica4();
+  ColeccionFL coleccion;
+  FuenteDireccional* direccional;
+  FuentePosicional* posicional;
 
+  ObjetoPractica4();
+  
   void aumentarAlpha();
   void aumentarBeta();
   void disminuirAlpha();
@@ -23,9 +30,5 @@ class MaterialTapasLata : public MaterialEstandar { public: MaterialTapasLata();
 class MaterialPeonMadera : public MaterialEstandar { public: MaterialPeonMadera(); };
 class MaterialPeonBlanco : public MaterialEstandar { public: MaterialPeonBlanco(); };
 class MaterialPeonNegro : public MaterialEstandar { public: MaterialPeonNegro(); };
-
-class Fuente1 : public FuenteLuz {
-  Fuente1();
-};
 
 #endif

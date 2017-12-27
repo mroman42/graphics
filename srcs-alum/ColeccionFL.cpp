@@ -18,3 +18,5 @@ void ColeccionFL::activar() {
   for (int i = 0; i < fuentes.size(); i++)
     fuentes[i] -> activar(i);
 }
+
+ColeccionFL::ColeccionFL() {}
