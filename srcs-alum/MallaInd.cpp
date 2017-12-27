@@ -228,7 +228,12 @@ void MallaInd::calcularNormales() {
     Tupla3f r = vertices[cara[2]];
     Tupla3f a = q - p;
     Tupla3f b = r - p;
-    nor_tri[i] = (a.cross(b)).normalized();
+
+    // Sólo normaliza cuando hay un vector no nulo
+    if ((a.cross(b)).lengthSq() == 0)
+      nor_tri[i] = a.cross(b);
+    else
+      nor_tri[i] = (a.cross(b)).normalized();
   }
 
   // Tabla de normales de los vértices. Suma a los tres vértices
@@ -239,7 +244,12 @@ void MallaInd::calcularNormales() {
     nor_ver[cara[1]] = nor_ver[cara[1]] + nor_tri[i];
     nor_ver[cara[2]] = nor_ver[cara[2]] + nor_tri[i];
   }
+  
   for (int i = 0; i < nor_ver.size(); i++) {
-    nor_ver[i] = nor_ver[i].normalized();
+    // Sólo normaliza cuando es un vector no nulo
+    if (nor_ver[i].lengthSq() == 0)
+      nor_ver[i] = nor_ver[i];
+    else
+      nor_ver[i] = nor_ver[i].normalized();
   }
 }

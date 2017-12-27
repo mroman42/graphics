@@ -7,35 +7,18 @@ MallaRevol::MallaRevol(const std::string& nombre_arch,
   // Extrae los puntos que generarán los vértices.
   std::vector<float> plyv;
   ply::read_vertices(nombre_arch.c_str(), plyv);
-  int vnum = plyv.size()/3;
+  int vnum = (plyv.size() / 3);
   darColor(0.0,0.0,0.0);
 
-  // Distancias para medir las coordenadas de textura
+  // Distancias entre los puntos de los perfiles, se usarán para medir
+  // las coordenadas de textura.
   std::vector<float> distancias;
-  for (unsigned i=0; i < vnum; i++) {
-    if (i == 0)
-      // d_0 = 0
-      distancias.push_back(0); 
-    else {
-      // d_{j+1} = d_j + || p_{j+1} - p_j ||
-      const float px = plyv[i*3];
-      const float py = plyv[i*3+1];
-      const float pz = plyv[i*3+2];
-      const float pax = plyv[(i-1)*3];
-      const float pay = plyv[(i-1)*3+1];
-      const float paz = plyv[(i-1)*3+2];
-      distancias.push_back(
-	distancias[i-1] +
-	sqrt((Tupla3f(px,py,pz) - Tupla3f(pax,pay,paz)).lengthSq())
-      );
-    }
-  }
   
   // La figura de revolución se extrae generando un número determinado
   // de perfiles, cada uno de ellos a distinto ángulo. Estos perfiles
   // serán unidos por caras que se añadirán uniendo cada perfil con el
   // siguiente.
-  for (unsigned j=0; j < nperfiles or (j == nperfiles and not cerrar_malla); j++) {
+  for (int j = 0; j < nperfiles or (j == nperfiles and not cerrar_malla); j++) {
     // Genera el ángulo al que va a colocar el perfil
     const double angulo = j*2*M_PI/nperfiles;
     const double cosp = cos(angulo);
@@ -52,10 +35,17 @@ MallaRevol::MallaRevol(const std::string& nombre_arch,
       const float nz = cosp*pz + senp*px;
       vertices.push_back(Tupla3f(nx,ny,nz));
 
+      // Cálculo de distancias
+      if (i == 0)
+	distancias.push_back(0);
+      else
+	distancias.push_back(distancias[i-1] + sqrt((vertices[i] - vertices[i-1]).lengthSq()));
+	
       // Coordenadas de textura del vértice
-      const float si = j / (nperfiles - 1);
-      const float ti = distancias[j] / distancias[vnum-1];
+      const float si = 1 - j / (float)(nperfiles - 1);
+      const float ti = 1 - distancias[i] / distancias[vnum - 1];
       cctt.push_back(Tupla2f(si,ti));
+    
 
       // Une el perfil con el anterior mediante dos triángulos
       // que se unen formando una cara con el siguiente vértice.
@@ -106,7 +96,7 @@ MallaRevol::MallaRevol(const std::string& nombre_arch,
     // Caras formando las tapas superior e inferior contando hasta la
     // penúltima cara y teniendo en cuenta cuándo se está cerrando la
     // malla.
-    for (unsigned k=0; k<nperfiles and (k<(nperfiles-1) or not cerrar_malla); k++) {
+    for (int k=0; k<nperfiles and (k<(nperfiles-1) or not cerrar_malla); k++) {
       // Cara superior
       int supa = (k+1)*vnum - 1;
       int supb = vertices.size() - 1;
@@ -136,4 +126,8 @@ MallaRevol::MallaRevol(const std::string& nombre_arch,
       caras.push_back(Tupla3i(infa,infb,infc));
     }
   }
+
+  // Una vez creadas todas las caras, inicializa las normales y
+  // calcula las coordenadas de textura.
+  calcularNormales();
 }

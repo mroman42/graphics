@@ -314,7 +314,6 @@ void FGE_Desocupado() {
 // ** Funciones de inicialización
 // **
 // *********************************************************************
-
 // inicialización de GLUT: creación de la ventana, designar FGEs
 void Inicializa_GLUT(int argc, char * argv[]) {
    // inicializa variables globales usadas en esta función (y otras)
@@ -370,7 +369,6 @@ void Inicializa_Vars() {
 
 // ---------------------------------------------------------------------
 // inicialización de OpenGL
-
 void Inicializa_OpenGL() {
   #ifdef LINUX
   ExigirGLEW("Error al exigir GLEW.");
@@ -410,7 +408,7 @@ void Inicializa_OpenGL() {
 	<< flush;
 
   // compilar shaders, crear programa
-  idProg = CrearPrograma("fragmentshader.glsl", "vertexshader.glsl");
+  // idProg = CrearPrograma("fragmentshader.glsl", "vertexshader.glsl");
   
   // ya está
   CError();
@@ -418,7 +416,6 @@ void Inicializa_OpenGL() {
 
 // ---------------------------------------------------------------------
 // Código de inicialización (llama a los dos anteriores, entre otros)
-
 void Inicializar(int argc, char *argv[]) {
    // inicializa las variables del programa
    Inicializa_Vars();
@@ -435,10 +432,6 @@ void Inicializar(int argc, char *argv[]) {
    P3_Inicializar();
    P4_Inicializar();
 }
-
-
-
-
 
 // *********************************************************************
 // **

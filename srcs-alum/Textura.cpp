@@ -11,7 +11,14 @@ void Textura::activar() {
   glGenTextures(1, &idText);
   glEnable(GL_TEXTURE_2D);
   glBindTexture(GL_TEXTURE_2D, idText);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tamx, tamy, 0, GL_RGB, GL_UNSIGNED_BYTE, texels);
+  gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, tamx, tamy, GL_RGB, GL_UNSIGNED_BYTE, texels);
+  // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tamx, tamy, 0, GL_RGB, GL_UNSIGNED_BYTE, texels);
+
+  // Parámetros de textura
+  // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+  // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+  // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+  // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
   // Generación procedural de las coordenadas de textura
   if (mgct == 1) {

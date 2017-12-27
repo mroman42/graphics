@@ -3,7 +3,9 @@
 void MaterialEstandar::activar() {
   // Se habilita la iluminación en OpenGL
   glEnable(GL_LIGHTING);
-
+  glEnable(GL_NORMALIZE);
+  glDisable(GL_COLOR_MATERIAL);
+  
   // Se configuran los parámetros de material de OpenGL
   glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, color[0]); // emisión
   glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, color[1]); // ambiente
@@ -17,8 +19,6 @@ void MaterialEstandar::activar() {
   glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
   glColorMaterial(GL_FRONT_AND_BACK, GL_SPECULAR);
   glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-
-  glEnable(GL_COLOR_MATERIAL);
   
   // Habilitación de textura para los materiales que la llevan
   if (textura == nullptr)
