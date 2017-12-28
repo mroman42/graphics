@@ -24,6 +24,7 @@
 #include "practica2.hpp"
 #include "practica3.hpp"
 #include "practica4.hpp"
+#include "practica5.hpp"
 
 #include "MallaInd.hpp"
 
@@ -65,7 +66,7 @@ int ventana_tam_y; // alto inicial actual de la ventana, en pixels
 
 ContextoVis contextoVis; // contexto de visualización actual (modo de visualización)
 
-const unsigned NPRACTICAS = 4; // número de prácticas
+const unsigned NPRACTICAS = 5; // número de prácticas
 unsigned practicaActual; // practica actual (cambiable por teclado) (1,2,3,4,5)
 unsigned modoVis = 1; // modo de visualización actual
 
@@ -174,6 +175,7 @@ void DibujarObjetos() {
    case 2: P2_DibujarObjetos(contextoVis); break;
    case 3: P3_DibujarObjetos(contextoVis); break;
    case 4: P4_DibujarObjetos(contextoVis); break;
+   case 5: P5_DibujarObjetos(contextoVis); break;
    default :
      cout << "El valor de 'practicaActual' (" << practicaActual << ") es incorrecto" << endl;
      break ;
@@ -261,6 +263,7 @@ void FGE_PulsarTeclaNormal(unsigned char tecla, int x_raton, int y_raton) {
      case 2: redibujar = P2_FGE_PulsarTeclaNormal(tecla); break;
      case 3: redibujar = P3_FGE_PulsarTeclaNormal(tecla); break;
      case 4: redibujar = P4_FGE_PulsarTeclaNormal(tecla); break;
+     case 5: redibujar = P5_FGE_PulsarTeclaNormal(tecla); break;
      default:
        // La tecla no es de la práctica activa, no es necesario redibujar.
        redibujar = false; 
@@ -431,6 +434,7 @@ void Inicializar(int argc, char *argv[]) {
    P2_Inicializar(argc, argv);
    P3_Inicializar();
    P4_Inicializar();
+   P5_Inicializar();
 }
 
 // *********************************************************************
