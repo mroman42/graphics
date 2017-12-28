@@ -5,9 +5,33 @@
 static ObjetoPractica4* objeto_practica_5 = nullptr;
 static int angulo_actual = 0;
 
-void P5_Inicializar() {
-  // Asigna al puntero el objeto de la práctica 5
+// Posición anterior del ratón
+static int xant = 0;
+static int yant = 0;
+
+// Cámaras activas actualmente
+static std::vector<CamaraInteractiva> camaras;
+static int camaraActiva = 0;
+
+// Viewport actual
+static Viewport viewport;
+
+
+void P5_Inicializar(int tamx, int tamy) {
+  // Asigna al puntero el objeto de la práctica 5, que es el mismo de
+  // la práctica 4.
   objeto_practica_5 = new ObjetoPractica4();
+
+  // Crea las cámaras
+  // 1. Frente: examinar, perspectiva, ratio 1, longlat, atención al origen
+  camaras.push_back(CamaraInteractiva(true, true, 1, 45, 45, Tupla3f(0,0,0)));
+  // 2. Alzado: examinar, ortográfica, ratio 2, longlat, atención al origen
+  camaras.push_back(CamaraInteractiva(true, false, 2, 90, 0, Tupla3f(0,0,0)));
+  // 3. Perfil: examinar, perspectiva, ratio 1, longlat, atención al origen
+  camaras.push_back(CamaraInteractiva(true, true, 1, 0, 90, Tupla3f(0,0,0)));
+
+  // Crea el viewport con los parámetros que ha recibido desde main
+  viewport = Viewport(0,0,tamx,tamy);
 }
 
 void P5_DibujarObjetos(ContextoVis& cv) {
@@ -18,6 +42,39 @@ void P5_DibujarObjetos(ContextoVis& cv) {
 }
 
 bool P5_FGE_PulsarTeclaNormal(unsigned char tecla) {
+  if (tecla == 'c' or tecla == 'C') {
+    // Cambia la cámara activa
+    camaraActiva++;
+    camaraActiva %= camaras.size();
+    std::cout << "Cámara activa: " << camaraActiva << std::endl;
+    return true;
+  }
+  else if (tecla == 'w' or tecla == 'W' or tecla == 'v' or tecla == 'V') {
+    // Cambia entre modo examinar y modo primera persona
+    if (camaras[camaraActiva].examinar) {
+      camaras[camaraActiva].modoPrimeraPersona();
+      std::cout << "Cámara activa: " << camaraActiva << " en modo Primera Persona." << std::endl;
+    }
+    else {
+      camaras[camaraActiva].modoExaminar();
+      std::cout << "Cámara activa: " << camaraActiva << " en modo Examinar." << std::endl;
+    }
+
+    return true;
+  }
+  else if (tecla == '+' or tecla == '(') {
+    // Acerca
+    std::cout << "Acerca la cámara" << std::endl;
+    camaras[camaraActiva].desplaZ(1);
+    return true;
+  }
+  else if (tecla == '-' or tecla == ')') {
+    // Aleja
+    std::cout << "Aleja la cámara" << std::endl;
+    camaras[camaraActiva].desplaZ(-1);
+    return true;
+  }
+  
   if (tecla == 'g' or tecla == 'G') {
     // Conmutar entre ángulo alpha y ángulo beta
     if (angulo_actual == 0) {
@@ -49,6 +106,27 @@ bool P5_FGE_PulsarTeclaNormal(unsigned char tecla) {
   return false;
 }
 
+bool P5_FGE_PulsarTeclaEspecial(unsigned char tecla) {
+  bool redibujar = false;
+
+  switch (tecla) {
+  case GLUT_KEY_LEFT:
+    camaras[camaraActiva].moverHV(-1,0);
+    redibujar = true; break;
+  case GLUT_KEY_RIGHT:
+    camaras[camaraActiva].moverHV(1,0);
+    redibujar = true; break;
+  case GLUT_KEY_DOWN:
+    camaras[camaraActiva].moverHV(0,-1);
+    redibujar = true; break;
+  case GLUT_KEY_UP:
+    camaras[camaraActiva].moverHV(0,1);
+    redibujar = true; break;
+  }
+
+  return redibujar;
+}
+
 // Función de gestión del evento desocupado de la práctica 5. Debe
 // devolver
 //   - false: si queremos que desactive el evento
@@ -70,4 +148,54 @@ bool P5_FGE_Desocupado() {
   // Termina, manteniendo activado el evento desocupado. Devolver true
   // mantiene en main el evento desocupado.
   return true;
+}
+
+// Procesa el click del ratón, determinando el botón que se ha pulsado.
+bool P5_FGE_ClickRaton(int button, int state, int x, int y) {
+  if (button == GLUT_LEFT_BUTTON and state == GLUT_DOWN)
+    P5_ClickIzquierdo(x,y);
+  else if (button == GLUT_RIGHT_BUTTON and state == GLUT_DOWN)
+    P5_InicioModoArrastrar(x,y);
+}
+
+// Calcula el objeto sobre el que se ha hecho el click. Si hay alguno
+// seleccionado pone la cámara activa mirando a dicho objeto en modo
+// examinar y devuelve true, en otro caso devuelve false
+bool P5_ClickIzquierdo(int x, int y) {
+  // ???
+  return true;
+}
+
+// Entra en modo arrastrar, registra donde se ha iniciado el movimiento
+void P5_InicioModoArrastrar(int x, int y) {
+  // Registra la posición de inicio del arrastre
+  xant = x;
+  yant = y;
+}
+
+bool P5_FGE_RatonMovidoPulsado(int x, int y) {
+  // Verifica si el botón pulsado es el botón derecho y en ese caso
+  // invoca la función de arrastre
+  // if ()
+  P5_RatonArrastradoHasta(x,y);
+}
+
+void P5_RatonArrastradoHasta(int x, int y) {
+  // Calcula la diferencia de distancias
+  int dx = x - xant;
+  int dy = y - yant;
+  xant = x;
+  yant = y;
+  
+  // Coloca la cámara según esa misma diferencia
+  camaras[camaraActiva].moverHV(dx,dy);
+}
+
+void P5_FijarMVPOpenGL(int vpx, int vpy) {
+  // Actualiza el Viewport y cambia el ratio del viewfrustum de la
+  // cámara; con esto, fija matrices en OpenGL.
+  viewport = Viewport(0,0,vpx,vpy);
+  camaras[camaraActiva].ratio_yx_vp = ((float) vpy) / ((float) vpx);
+  camaras[camaraActiva].calcularViewfrustum();
+  camaras[camaraActiva].fijarMVPogl();
 }

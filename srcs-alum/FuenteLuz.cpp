@@ -24,7 +24,8 @@ void FuenteLuz::activar(int i) {
   if (posvec[3] == 0) {
     const float ejez[4] = {0.0, 0.0, 1.0, 0.0};
     glMatrixMode(GL_MODELVIEW);
-    
+
+    // Rotaciones para fijar latitud y longitud sobre los ejes
     glPushMatrix();
     {
       glLoadIdentity();

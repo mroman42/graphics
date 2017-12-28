@@ -3,6 +3,7 @@
 
 #include "practicas.hpp"
 #include "Objeto3D.hpp"
+#include "CamaraInteractiva.hpp"
 #include "ObjetoPractica4.hpp"
 #include "aux.hpp"
 #include <string>
@@ -14,11 +15,18 @@ static int p5_grado_libertad_activo;
 static bool p5_animaciones;
 
 // Funciones de gestión de la práctica 5
-void P5_Inicializar();
+void P5_Inicializar(int tamx, int tamy);
 void P5_DibujarObjetos(ContextoVis& cv);
 bool P5_FGE_PulsarTeclaNormal(unsigned char tecla);
 bool P5_FGE_PulsarTeclaEspecial(unsigned char tecla);
+bool P5_FGE_ClickRaton(int button, int state, int x, int y);
+bool P5_FGE_RatonMovidoPulsado(int x, int y);
 bool P5_FGE_Desocupado();
+bool P5_ClickIzquierdo(int x, int y);
+void P5_InicioModoArrastrar(int x, int y);
+void P5_RatonArrastradoHasta(int x, int y);
+void P5_FijarMVPOpenGL(int vpx, int vpy);
+
 
 // Declara la función gestora del evento desocupado
 void FGE_Desocupado();

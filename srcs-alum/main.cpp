@@ -195,8 +195,17 @@ void FGE_Redibujado() {
    using namespace std;
    glUseProgram(idProg);
    //cout << "redibujado......" << endl << flush;
-   FijarViewportProyeccion(); // necesario, pues la escala puede cambiar
-   FijarCamara();
+
+   // En el caso de la práctica 5, es la misma práctica la que fijará
+   // la cámara que se usará internamente; el resto de prácticas usan
+   // la versión estándar de la cámara.
+   if (practicaActual == 5)
+     P5_FijarMVPOpenGL(ventana_tam_x, ventana_tam_y);
+   else {
+     FijarViewportProyeccion(); // necesario, pues la escala puede cambiar
+     FijarCamara();
+   }
+   
    LimpiarVentana();
    DibujarEjes();
    DibujarObjetos();
@@ -298,7 +307,21 @@ void FGE_PulsarTeclaEspecial( int tecla, int x_raton, int y_raton ) {
    using namespace std;
 
    // si se ha cambiado algo, forzar evento de redibujado
-   if (redisp) glutPostRedisplay();
+   if (redisp) glutPostRedisplay();}
+
+
+// Función gestora de las pulsaciones de ratón
+void FGE_ClickRaton(int button, int state, int x, int y) {
+  if (practicaActual == 5)
+    if (P5_FGE_ClickRaton(button, state, x, y))
+      glutPostRedisplay();
+}
+
+// Función gestora de los movimientos de ratón
+void FGE_RatonMovidoPulsado(int x, int y) {
+  if (practicaActual == 5)
+    if (P5_FGE_RatonMovidoPulsado(x,y))
+      glutPostRedisplay();
 }
 
 
@@ -351,6 +374,10 @@ void Inicializa_GLUT(int argc, char * argv[]) {
 
    // establece función gestora del evento de pulsación de tecla especial:
    glutSpecialFunc(FGE_PulsarTeclaEspecial);
+
+   // establece función gestora de pulsación y movimiento de ratón
+   glutMouseFunc(FGE_ClickRaton);
+   glutMotionFunc(FGE_RatonMovidoPulsado);
 }
 
 // ---------------------------------------------------------------------
@@ -434,7 +461,7 @@ void Inicializar(int argc, char *argv[]) {
    P2_Inicializar(argc, argv);
    P3_Inicializar();
    P4_Inicializar();
-   P5_Inicializar();
+   P5_Inicializar(ventana_tam_x, ventana_tam_y);
 }
 
 // *********************************************************************
