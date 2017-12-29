@@ -1,4 +1,5 @@
 #include "Viewport.hpp"
+#include "aux.hpp"
 
 Viewport::Viewport() : Viewport(0,0,512,512) {}
 
@@ -24,4 +25,8 @@ Viewport::Viewport(int p_org_x, int p_org_y, int p_ancho, int p_alto)
     MAT_Escalado(2,2,2) *
     MAT_Escalado(1/((float) ancho), 1/((float) alto), 1) *
     MAT_Traslacion(-org_x,-org_y,0);
+}
+
+void Viewport::fijarViewport() {
+  glViewport(org_x, org_y, ancho, alto);
 }

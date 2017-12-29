@@ -22,13 +22,20 @@ void P5_Inicializar(int tamx, int tamy) {
   // la práctica 4.
   objeto_practica_5 = new ObjetoPractica4();
 
+  // Debería usar este ratio ???
+  float ratio = ((float) tamy) / ((float) tamx);
+
+  // Inicializa la práctica 5 sobre una ventana
+
   // Crea las cámaras
+  // Primera persona
+  camaras.push_back(CamaraInteractiva(false, true, ratio, 0, 0, Tupla3f(0,0,0), 40));
+  // 2. Alzado: examinar, ortográfica, ratio 2, longlat, atención al origen, distancia
+  camaras.push_back(CamaraInteractiva(true, false, ratio, 90, 0, Tupla3f(0,0,0)));
   // 1. Frente: examinar, perspectiva, ratio 1, longlat, atención al origen
-  camaras.push_back(CamaraInteractiva(true, true, 1, 45, 45, Tupla3f(0,0,0)));
-  // 2. Alzado: examinar, ortográfica, ratio 2, longlat, atención al origen
-  camaras.push_back(CamaraInteractiva(true, false, 2, 90, 0, Tupla3f(0,0,0)));
+  camaras.push_back(CamaraInteractiva(true, true, ratio, 0, 0, Tupla3f(0,0,0), 40));
   // 3. Perfil: examinar, perspectiva, ratio 1, longlat, atención al origen
-  camaras.push_back(CamaraInteractiva(true, true, 1, 0, 90, Tupla3f(0,0,0)));
+  camaras.push_back(CamaraInteractiva(true, true, ratio, 0, 90, Tupla3f(0,0,0), 40));
 
   // Crea el viewport con los parámetros que ha recibido desde main
   viewport = Viewport(0,0,tamx,tamy);
@@ -108,20 +115,26 @@ bool P5_FGE_PulsarTeclaNormal(unsigned char tecla) {
 
 bool P5_FGE_PulsarTeclaEspecial(unsigned char tecla) {
   bool redibujar = false;
-
-  switch (tecla) {
-  case GLUT_KEY_LEFT:
+  
+  if (tecla == GLUT_KEY_LEFT or tecla == 'j') {
+    std::cout << "Movimiento a izquierda" << std::endl;
     camaras[camaraActiva].moverHV(-1,0);
-    redibujar = true; break;
-  case GLUT_KEY_RIGHT:
+    redibujar = true;
+  }
+  else if (tecla == GLUT_KEY_RIGHT or tecla == 'l') {
+    std::cout << "Movimiento a derecha" << std::endl;
     camaras[camaraActiva].moverHV(1,0);
-    redibujar = true; break;
-  case GLUT_KEY_DOWN:
+    redibujar = true;
+  }
+  else if (tecla == GLUT_KEY_DOWN or tecla == 'k') {
+    std::cout << "Movimiento abajo" << std::endl;
     camaras[camaraActiva].moverHV(0,-1);
-    redibujar = true; break;
-  case GLUT_KEY_UP:
+    redibujar = true;
+  }
+  else if (tecla == GLUT_KEY_UP or tecla == 'i') {
+    std::cout << "Movimiento arriba" << std::endl;
     camaras[camaraActiva].moverHV(0,1);
-    redibujar = true; break;
+    redibujar = true;
   }
 
   return redibujar;
@@ -195,6 +208,7 @@ void P5_FijarMVPOpenGL(int vpx, int vpy) {
   // Actualiza el Viewport y cambia el ratio del viewfrustum de la
   // cámara; con esto, fija matrices en OpenGL.
   viewport = Viewport(0,0,vpx,vpy);
+  viewport.fijarViewport(); // ??? tiene sentido usar el viewport así?
   camaras[camaraActiva].ratio_yx_vp = ((float) vpy) / ((float) vpx);
   camaras[camaraActiva].calcularViewfrustum();
   camaras[camaraActiva].fijarMVPogl();

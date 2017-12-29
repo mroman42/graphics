@@ -20,6 +20,9 @@ public:
 
   // Crea un viewport dados unos parámetros
   Viewport(int p_org_x, int p_org_y, int p_ancho, int p_alto);
+
+  // Fijar viewport
+  void fijarViewport();
 };
 
 #endif
