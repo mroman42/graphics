@@ -18,9 +18,10 @@ typedef enum {
   modoSolido,
   modoAjedrez,
   modoIluminacionPlano,
-  modoIluminacionSuave
+  modoIluminacionSuave,
+  modoSeleccion
 } ModosVisu;
-const int numModosVisu = 6;
+const int numModosVisu = 7;
 
 
 // Contextos de visualización

@@ -237,6 +237,17 @@ void FGE_PulsarTeclaNormal(unsigned char tecla, int x_raton, int y_raton) {
      // lo guarda en el contexto de visualización actual.
      modoVis++;
      modoVis %= numModosVisu;
+
+     switch (modoVis) {
+     case modoPuntos:           std::cout << "Modo Puntos"            << std::endl; break;
+     case modoAlambre:          std::cout << "Modo Alambre"           << std::endl; break;
+     case modoSolido:           std::cout << "Modo Sólido"            << std::endl; break;
+     case modoAjedrez:          std::cout << "Modo Ajedrez"           << std::endl; break;
+     case modoIluminacionPlano: std::cout << "Modo Iluminación Plano" << std::endl; break;
+     case modoIluminacionSuave: std::cout << "Modo Iluminación Suave" << std::endl; break;
+     case modoSeleccion:        std::cout << "Modo Selección"         << std::endl; break;
+     }
+     
      contextoVis.modoVisu = (ModosVisu) modoVis;
      break;
    case 'p': case 'P':

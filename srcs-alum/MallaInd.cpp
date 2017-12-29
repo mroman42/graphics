@@ -103,6 +103,34 @@ void MallaInd::visualizarGL(ContextoVis& cv) {
     glShadeModel(GL_SMOOTH);
     visualizarGL_Textura(cv);    
   }
+
+  // Modo selección, visualización limpia sólo útil para dibujarla
+  // sobre un frame-buffer y ayudar a la selección por pixels.
+  else if (cv.modoVisu == modoSeleccion) {
+    visualizarGL_Seleccion(cv);
+  }
+}
+
+void MallaInd::visualizarGL_Seleccion(ContextoVis& cv) {
+  // Desactiva la iluminación y las texturas
+  glDisable(GL_LIGHTING);
+  glDisable(GL_TEXTURE_2D);
+
+  // Se usa el mismo viewport y misma cámara actual (No está ya hecho ???)
+
+  // Coloreamos el nodo antes de dibujarlo
+  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+  FijarColorIdent();
+
+  // Habría que evitar que estuvieran activados materiales (???)
+  glEnableClientState(GL_VERTEX_ARRAY);
+  glVertexPointer(3, GL_FLOAT, 0, vertices[0]);
+  glDrawElements(GL_TRIANGLES, caras.size()*3, GL_UNSIGNED_INT, caras[0]);
+  glDisableClientState(GL_VERTEX_ARRAY);
+
+  // Reactiva todo
+  glEnable(GL_LIGHTING);
+  glEnable(GL_TEXTURE_2D);
 }
 
 void MallaInd::visualizarGL_Textura(ContextoVis& cv) {

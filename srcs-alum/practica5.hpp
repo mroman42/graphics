@@ -3,6 +3,7 @@
 
 #include "practicas.hpp"
 #include "Objeto3D.hpp"
+#include "BufferSeleccion.hpp"
 #include "CamaraInteractiva.hpp"
 #include "ObjetoPractica4.hpp"
 #include "aux.hpp"
@@ -26,7 +27,8 @@ bool P5_ClickIzquierdo(int x, int y);
 void P5_InicioModoArrastrar(int x, int y);
 void P5_RatonArrastradoHasta(int x, int y);
 void P5_FijarMVPOpenGL(int vpx, int vpy);
-
+void FijarColorIdent(const unsigned ident);
+unsigned LeerIdentEnPixel(int xpix, int ypix);
 
 // Declara la función gestora del evento desocupado
 void FGE_Desocupado();

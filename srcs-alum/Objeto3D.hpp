@@ -28,6 +28,9 @@ public:
   // Devuelve el nombre interno del objeto.
   std::string nombre();
 
+  // Asigna un color sacado exactamente del identificador del objeto.
+  void FijarColorIdent();
+  
   // Visualiza un objeto con el modo de visualización dado.
   virtual void visualizarGL(ContextoVis& cv) = 0;
 

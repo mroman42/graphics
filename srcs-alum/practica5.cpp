@@ -16,6 +16,9 @@ static int camaraActiva = 0;
 // Viewport actual
 static Viewport viewport;
 
+// Buffer de selección
+//static BufferSeleccion buffer;
+
 
 void P5_Inicializar(int tamx, int tamy) {
   // Asigna al puntero el objeto de la práctica 5, que es el mismo de
@@ -166,9 +169,11 @@ bool P5_FGE_Desocupado() {
 // Procesa el click del ratón, determinando el botón que se ha pulsado.
 bool P5_FGE_ClickRaton(int button, int state, int x, int y) {
   if (button == GLUT_LEFT_BUTTON and state == GLUT_DOWN)
-    P5_ClickIzquierdo(x,y);
+    return P5_ClickIzquierdo(x,y);
   else if (button == GLUT_RIGHT_BUTTON and state == GLUT_DOWN)
     P5_InicioModoArrastrar(x,y);
+
+  return true;
 }
 
 // Calcula el objeto sobre el que se ha hecho el click. Si hay alguno
@@ -177,9 +182,31 @@ bool P5_FGE_ClickRaton(int button, int state, int x, int y) {
 bool P5_ClickIzquierdo(int x, int y) {
   // ???
 
-  // Calcular el objeto sobre el que se ha hecho click
+  // Implementación con BufferSeleccion
+  // // Calcular el objeto sobre el que se ha hecho click ???
+  // // NodoGrafoEscena* obj = objeto_practica_5 -> buscarNodo();
+  // // buffer.inicioModoSel();
+  // // glutPostRedisplay();
+  // // buffer.finModoSel();
+  // // std::cout << "Nombre seleccionado: ";
+  // // for (int i=0; i<buffer.longNombreMin; i++)
+  // //   std::cout << buffer.nombreMin[i];
+  // // Poner la cámara mirando al objeto en modo examinar
 
-  // Poner la cámara mirando al objeto en modo examinar
+  // Implementamos la selección usando el frame-buffer trasero.
+  // 1. Fijamos el color del fondo de pantalla a (0,0,0)
+
+  // 2. Activamos el modo selección y visualizamos la escena.
+  // objeto_practica_5 -> visualizarGL(cv);
+
+  // 3. Determinamos si se ha seleccionado algún objeto comprobando si
+  // el color del pixel sobre el que se hace click es 0.
+
+  // 4. Caso de que no se haya encontrado objeto.
+
+  // 5. Buscar por el identificador del objeto.
+
+  // 6. Pasa la cámara al modo examinar en el objeto seleccionado.
   
   return true;
 }
@@ -220,4 +247,21 @@ void P5_FijarMVPOpenGL(int vpx, int vpy) {
   camaras[camaraActiva].ratio_yx_vp = ((float) vpy) / ((float) vpx);
   camaras[camaraActiva].calcularViewfrustum();
   camaras[camaraActiva].fijarMVPogl();
+}
+
+void FijarColorIdent(const int ident) {
+  // Asigna un color sacado exactamente del identificador del objeto.
+  if (ident != -1) {
+    const unsigned char byteR = (ident           ) % 0x100U; // rojo,  byte menos significativo
+    const unsigned char byteG = (ident /   0x100U) % 0x100U; // verde, byte intermedio
+    const unsigned char byteB = (ident / 0x10000U) % 0x100U; // azul,  byte más significativo
+    glColor3ub(byteR, byteG, byteB);
+  }
+}
+
+unsigned LeerIdentEnPixel(int xpix, int ypix) {
+  // Reconstruye un identificador a través de un color.
+  unsigned char bytes[3];
+  glReadPixels(xpix, ypix, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, (void*) bytes);
+  return bytes[0] + (0x100U * bytes[1]) + (0x10000U * bytes[2]);
 }

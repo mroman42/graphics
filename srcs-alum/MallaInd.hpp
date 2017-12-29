@@ -40,6 +40,8 @@ protected:
   // Visualiza con normales y coordenadas de textura
   void visualizarGL_Textura(ContextoVis& cv);
   void visualizarGL_Textura_VBOs(ContextoVis& cv);
+  // Visualiza en modo selección
+  void visualizarGL_Seleccion(ContextoVis& cv);
   
 public:
   // Función de visualización de la malla, implementando el método
