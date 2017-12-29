@@ -52,3 +52,26 @@ void NodoGrafoEscena::agregar(Material* pmaterial) {
   EntradaNGE* nueva = new EntradaNGE(pmaterial);
   agregar(nueva);
 }
+
+bool NodoGrafoEscena::buscarObjeto(const int ident, const Matriz4f& mmodelado,
+				   Objeto3D** objeto, Tupla3f& centro_wc) {
+  // Si el identificador es el buscado, se devuelve el objeto actual
+  // con su centro.
+  if (identificador == ident) {
+    *objeto = this;
+    // Habrá que multiplicar para calcular en coordenadas del mundo ???
+    centro_wc = centro_oc;
+    return true;
+  }
+  // En otro caso, se busca entre los hijos del nodo actual
+  else {
+    for (EntradaNGE entrada : entradas) {
+      // Si es un objeto, busca sobre él
+      if (entrada.tipoE == 0)
+	if (entrada.objeto -> buscarObjeto(ident, mmodelado, objeto, centro_wc))
+	  return true;
+    }
+  }
+
+  return false;
+}

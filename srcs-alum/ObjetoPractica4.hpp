@@ -31,4 +31,9 @@ class MaterialPeonMadera : public MaterialEstandar { public: MaterialPeonMadera(
 class MaterialPeonBlanco : public MaterialEstandar { public: MaterialPeonBlanco(); };
 class MaterialPeonNegro : public MaterialEstandar { public: MaterialPeonNegro(); };
 
+class Lata : public NodoGrafoEscena { public: Lata(); };
+class PeonBlanco : public NodoGrafoEscena { public: PeonBlanco(); };
+class PeonNegro : public NodoGrafoEscena { public: PeonNegro(); };
+class PeonMadera : public NodoGrafoEscena { public: PeonMadera(); };
+
 #endif

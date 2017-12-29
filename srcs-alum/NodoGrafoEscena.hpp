@@ -24,9 +24,7 @@ struct EntradaNGE {
 
   // Constructores de los dos tipos distintos
   EntradaNGE(Objeto3D* pObjeto) : tipoE(0), objeto(pObjeto) {};
-  EntradaNGE(const Matriz4f& pMatriz) : tipoE(1) {
-    matriz = new Matriz4f(pMatriz);
-  };
+  EntradaNGE(const Matriz4f& pMatriz) : tipoE(1) { matriz = new Matriz4f(pMatriz); };
   EntradaNGE(Material* pmaterial) : tipoE(2), material(pmaterial) {};
 };
 
@@ -38,7 +36,7 @@ protected:
 public:
   // Visualizar el nodo usando OpenGL, se dibujará recursivamente la
   // estructura compuesta del nodo raíz.
-  virtual void visualizarGL(ContextoVis& cv);
+  virtual void visualizarGL(ContextoVis& cv) override;
 
   // Añade una entrada al final del nodo, directamente o
   // construyéndola desde un objeto o una matriz.
@@ -46,6 +44,9 @@ public:
   void agregar(Objeto3D* pObjeto);
   void agregar(const Matriz4f& pMatriz);
   void agregar(Material* material);
+
+  bool buscarObjeto(const int ident, const Matriz4f& mmodelado,
+		    Objeto3D** objeto, Tupla3f& centro_wc) override;
 };
 
 #endif

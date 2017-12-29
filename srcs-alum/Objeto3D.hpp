@@ -15,10 +15,7 @@ protected:
   std::string nombre_objeto;
 
 public:
-  Objeto3D(){
-    identificador = 0;
-    centro_oc = Tupla3f(0,0,0);
-  }
+  Objeto3D() : identificador(0), centro_oc(Tupla3f(0,0,0)) {}
 
   // Identificador del objeto. Se usa un valor 0 para los nodos que no
   // pueden ser seleccionados y se usa un valor -1 para los objetos de

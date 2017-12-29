@@ -101,23 +101,30 @@ void CamaraInteractiva::desplaZ(int nz) {
     // Actualiza la distancia siguiendo la fórmula de la práctica;
     // tras modificar la distancia, se debe volver a llamar al
     // frustum.
-    std::cerr << "Factor de movimiento nz: " << nz << std::endl;
-    std::cerr << "Distancia anterior: " << dist << std::endl;
+    // std::cerr << "Factor de movimiento nz: " << nz << std::endl;
+    // std::cerr << "Distancia anterior: " << dist << std::endl;
     dist = dmin + (dist-dmin) * (1.0 - nz * porc / 100.0);
-    std::cerr << "Distancia nueva: " << dist << std::endl;    
+    std::cerr << "Distancia nueva: " << dist << std::endl;
     calcularViewfrustum();
     calcularMarcoCamara();
   }
 }
 
 void CamaraInteractiva::modoExaminar(const Tupla3f& paten) {
+  examinar = true;
   aten = paten;
+  calcularViewfrustum();
+  calcularMarcoCamara();
 }
 
 void CamaraInteractiva::modoExaminar() {
   examinar = true;
+  calcularViewfrustum();
+  calcularMarcoCamara();
 }
 
 void CamaraInteractiva::modoPrimeraPersona() {
   examinar = false;
+  calcularViewfrustum();
+  calcularMarcoCamara();
 }

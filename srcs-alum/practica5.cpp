@@ -176,6 +176,11 @@ bool P5_FGE_ClickRaton(int button, int state, int x, int y) {
 // examinar y devuelve true, en otro caso devuelve false
 bool P5_ClickIzquierdo(int x, int y) {
   // ???
+
+  // Calcular el objeto sobre el que se ha hecho click
+
+  // Poner la cámara mirando al objeto en modo examinar
+  
   return true;
 }
 
@@ -189,8 +194,11 @@ void P5_InicioModoArrastrar(int x, int y) {
 bool P5_FGE_RatonMovidoPulsado(int x, int y) {
   // Verifica si el botón pulsado es el botón derecho y en ese caso
   // invoca la función de arrastre
-  // if ()
+  
+  // ??? Cómo lo va a verificar
   P5_RatonArrastradoHasta(x,y);
+
+  return true;
 }
 
 void P5_RatonArrastradoHasta(int x, int y) {
