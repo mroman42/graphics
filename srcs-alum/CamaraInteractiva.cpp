@@ -14,10 +14,13 @@ static const float porc = 4;
 static const float dmin = 0.5;
 
 CamaraInteractiva::CamaraInteractiva(bool pexaminar, bool pperspectiva, int pratio,
-				     float plongi, float plati, const Tupla3f& paten, float pdist)
+				     float plongi, float plati, const Tupla3f& paten,
+				     float pdist, std::string pnombre)
   : examinar(pexaminar), perspectiva(pperspectiva), ratio_yx_vp(pratio),
     longi(plongi), lati(plati), aten(paten), dist(pdist)
 {
+  nombre = pnombre;
+  
   // Distancia inicial para todas las cámaras
   calcularMarcoCamara();
   calcularViewfrustum();
@@ -35,13 +38,13 @@ void CamaraInteractiva::calcularViewfrustum() {
     const float near = 0.01;
     const float far  = 200;
     // ??? El primer parámetro debería ser hfovy, pero funciona como dist (???)
-    const float hfovy = 2;
+    const float hfovy = 45;
     vf = ViewFrustum(hfovy, ratio_yx_vp, near, far);
   }
   
   // Crea view-frustum ortográfico
   else {
-    vf = ViewFrustum();
+    vf = ViewFrustum(dist);
   }
 }
 
@@ -84,6 +87,8 @@ void CamaraInteractiva::moverHV(int nh, int nv) {
     // Recalcula el marco de coordenadas de la cámara
     calcularMarcoCamara();
   }
+
+  // calcularViewfrustum();
 }
 
 void CamaraInteractiva::desplaZ(int nz) {
@@ -94,6 +99,7 @@ void CamaraInteractiva::desplaZ(int nz) {
     Tupla3f despl = mcv.eje[2] * nz * udespv;
     mcv.org = mcv.org + despl;
     mcv.matrizML = mcv.matrizML * MAT_Traslacion(despl[0], despl[1], despl[2]);
+    dist = dmin + (dist-dmin) * (1.0 - nz * porc / 100.0);
   }
 
   // Modo examinar
@@ -103,11 +109,12 @@ void CamaraInteractiva::desplaZ(int nz) {
     // frustum.
     // std::cerr << "Factor de movimiento nz: " << nz << std::endl;
     // std::cerr << "Distancia anterior: " << dist << std::endl;
+    // std::cerr << "Distancia nueva: " << dist << std::endl;
     dist = dmin + (dist-dmin) * (1.0 - nz * porc / 100.0);
-    std::cerr << "Distancia nueva: " << dist << std::endl;
-    calcularViewfrustum();
-    calcularMarcoCamara();
   }
+
+  calcularViewfrustum();
+  calcularMarcoCamara();
 }
 
 void CamaraInteractiva::modoExaminar(const Tupla3f& paten) {

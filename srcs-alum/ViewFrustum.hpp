@@ -15,8 +15,8 @@ public:
   float far;
   Matriz4f matrizProy;
 
-  // Crea view-frustum ortográfico, de lado 2 y centrado en el 0.
-  ViewFrustum();
+  // Crea view-frustum ortográfico
+  ViewFrustum(float dist = 1);
 
   // Crea view-frustum perspectiva
   ViewFrustum(float hfovy, float aspect, float zNear, float zFar);

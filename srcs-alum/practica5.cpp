@@ -35,14 +35,14 @@ void P5_Inicializar(int tamx, int tamy) {
   // Inicializa la práctica 5 sobre una ventana
 
   // Crea las cámaras
-  // Primera persona
-  camaras.push_back(CamaraInteractiva(false, true, ratio, 0, 0, Tupla3f(0,0,0), 40));
-  // 2. Alzado: examinar, ortográfica, ratio 2, longlat, atención al origen, distancia
-  camaras.push_back(CamaraInteractiva(true, false, ratio, 90, 0, Tupla3f(0,0,0)));
-  // 1. Frente: examinar, perspectiva, ratio 1, longlat, atención al origen
-  camaras.push_back(CamaraInteractiva(true, true, ratio, 0, 0, Tupla3f(0,0,0), 40));
-  // 3. Perfil: examinar, perspectiva, ratio 1, longlat, atención al origen
-  camaras.push_back(CamaraInteractiva(true, true, ratio, 0, 90, Tupla3f(0,0,0), 40));
+  // 1. Perspectiva de alzado
+  camaras.push_back(CamaraInteractiva(true, true, ratio, 0, 0, Tupla3f(0,0,0), 2, "Perspectiva de alzado"));
+  // 2. Perspectiva de perfil
+  camaras.push_back(CamaraInteractiva(true, true, ratio, 90, 0, Tupla3f(0,0,0), 2, "Perspectiva de perfil"));
+  // 3. Perspectiva de planta
+  camaras.push_back(CamaraInteractiva(true, true, ratio, 0, 90, Tupla3f(0,0,0), 2, "Perspectiva de planta"));
+  // 4. Ortográfica de alzado
+  camaras.push_back(CamaraInteractiva(false, false, ratio, 0, 0, Tupla3f(0,0,0), 1, "Ortográfica"));
 
   // Crea el viewport con los parámetros que ha recibido desde main
   viewport = Viewport(0,0,tamx,tamy);
@@ -60,7 +60,7 @@ bool P5_FGE_PulsarTeclaNormal(unsigned char tecla) {
     // Cambia la cámara activa
     camaraActiva++;
     camaraActiva %= camaras.size();
-    std::cout << "Cámara activa: " << camaraActiva << std::endl;
+    std::cout << "Cámara activa: (" << camaraActiva  << ") " << camaras[camaraActiva].nombre << std::endl;
     return true;
   }
   else if (tecla == 'w' or tecla == 'W' or tecla == 'v' or tecla == 'V') {

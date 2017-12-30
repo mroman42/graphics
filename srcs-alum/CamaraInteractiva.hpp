@@ -19,7 +19,7 @@ public:
   // Constructor de cámaras
   CamaraInteractiva(bool pexaminar, bool pperspectiva, int pratio,
 		    float plongi, float plati, const Tupla3f& paten,
-		    float pdist = 4);
+		    float pdist = 4, std::string nombre = "");
 
   // Calcula el view-frustum
   void calcularViewfrustum();
