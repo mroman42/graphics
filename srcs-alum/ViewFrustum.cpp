@@ -1,6 +1,6 @@
 #include "ViewFrustum.hpp"
 
-ViewFrustum::ViewFrustum(float dist) {
+ViewFrustum::ViewFrustum(float dist, float zNear, float zFar) {
   // View-frustum ortográfica
   persp = false;
   

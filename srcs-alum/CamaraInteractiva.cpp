@@ -29,20 +29,21 @@ CamaraInteractiva::CamaraInteractiva(bool pexaminar, bool pperspectiva, int prat
 
 void CamaraInteractiva::calcularViewfrustum() {
   // Lee perspectiva, dist, ratio_yx_vp
+
+  // Qué plano de recorte elegir ???
+  // Puede jugarse con el plano de recorte para solucionar el ratio ???  
+  const float hfovy = 45;
+  const float near = 0.01;
+  const float far  = 200;
   
   // Crea view-frustum perspectiva  
   if (perspectiva) {
-    // Qué plano de recorte elegir ???
-    // Puede jugarse con el plano de recorte para solucionar el ratio ???
-    const float near = 0.01;
-    const float far  = 200;
-    const float hfovy = 45;
     vf = ViewFrustum(hfovy, ratio_yx_vp, near, far);
   }
   
   // Crea view-frustum ortográfico
   else {
-    vf = ViewFrustum(dist);
+    vf = ViewFrustum(dist, near, far);
   }
 }
 
