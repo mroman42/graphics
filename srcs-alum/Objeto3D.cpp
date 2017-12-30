@@ -11,7 +11,6 @@ bool Objeto3D::buscarObjeto(const int ident, const Matriz4f& mmodelado, Objeto3D
   // con su centro.
   if (identificador == ident) {
     *objeto = this;
-    // Habrá que multiplicar para calcular en coordenadas del mundo ???
     centro_wc = centro_oc;
     return true;
   }
@@ -26,9 +25,5 @@ void Objeto3D::FijarColorIdent() {
     const unsigned char byteG = (identificador /   0x100U) % 0x100U; // verde, byte intermedio
     const unsigned char byteB = (identificador / 0x10000U) % 0x100U; // azul,  byte más significativo
     glColor3ub(byteR, byteG, byteB);
-    // std::cerr << "Color: "
-    // 	      << unsigned(byteR) << "," << unsigned(byteG) << "," << unsigned(byteB)
-    //           << " Identificador: " << identificador
-    // 	      << std::endl;
   }
 }
