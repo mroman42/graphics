@@ -1,9 +1,6 @@
 #include "MarcoCoordVista.hpp"
 
 MarcoCoordVista::MarcoCoordVista() {
-  // Marco de coordenadas centrado en el origen
-  org = Tupla3f(0,0,0);
-
   // Mirando a Z-
   eje[0] = Tupla3f(1,0,0);
   eje[1] = Tupla3f(0,1,0);
@@ -22,8 +19,6 @@ MarcoCoordVista::MarcoCoordVista(const Tupla3f& pfoco, const Tupla3f& paten, con
   
   // Calcular el marco es necesario para poder moverse luego.  Lo
   // calculará usando perpendiculares (Tema 3).
-  org = pfoco;
-
   Tupla3f u = pvup;
   Tupla3f n = pfoco - paten;          // n = o - a
   eje[0] = n.cross(u).normalized();   // x = (n × u) / ‖n × u‖

@@ -7,7 +7,8 @@
 // Marco de coordenadas cartesiano de una vista
 class MarcoCoordVista {
 public:
-  Tupla3f org; // Origen del marco de coordenadas
+  // El marco no almacenará el origen, que se podrá calcular de los
+  // parámetros de la cámara.
   Tupla3f eje[3]; // Ejes cartesianos del marco de coordenadas (ortonormales)
   Matriz4f matrizML; // Matriz de coordenadas de marco a coordenadas de mundo
   Matriz4f matrizLM; // Matriz de coordenadas de mundo a coordenadas de marco
