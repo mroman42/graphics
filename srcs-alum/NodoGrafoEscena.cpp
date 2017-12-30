@@ -67,13 +67,22 @@ bool NodoGrafoEscena::buscarObjeto(const int ident, const Matriz4f& mmodelado,
     centro_wc = centro_oc;
     return true;
   }
-  // En otro caso, se busca entre los hijos del nodo actual
+  // En otro caso, se busca entre los hijos del nodo actual,
+  // acumulando las matrices que operen sobre el centro que encuentre
+  // luego.
   else {
+    Matriz4f transformaciones = MAT_Ident();
     for (EntradaNGE entrada : entradas) {
       // Si es un objeto, busca sobre él
       if (entrada.tipoE == 0)
-	if (entrada.objeto -> buscarObjeto(ident, mmodelado, objeto, centro_wc))
+	if (entrada.objeto -> buscarObjeto(ident, mmodelado, objeto, centro_wc)) {
+	  centro_wc = transformaciones * centro_wc;
 	  return true;
+	}
+      // Si es una matriz, acumula la transformación
+      if (entrada.tipoE == 1) {
+	transformaciones = transformaciones * (*entrada.matriz);
+      }
     }
   }
 
