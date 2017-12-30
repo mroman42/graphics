@@ -8,8 +8,6 @@ static const std::string archivo_lata_pcue = "../plys/lata-pcue.ply";
 static const std::string archivo_lata_psup = "../plys/lata-psup.ply";
 static const std::string archivo_lata_pinf = "../plys/lata-pinf.ply";  
 
-
-
 ObjetoPractica4::ObjetoPractica4() {
   // Datos globales de la escena
   nombre_objeto = "Escena de la práctica 4";
@@ -58,7 +56,7 @@ Lata::Lata() {
 
 PeonBlanco::PeonBlanco() {
   nombre_objeto = "Peón blanco";
-  identificador = 200;
+  identificador = 400;
   centro_oc = Tupla3f(0,0,0);
 
   agregar(new MaterialPeonBlanco());
@@ -67,7 +65,7 @@ PeonBlanco::PeonBlanco() {
 
 PeonNegro::PeonNegro() {
   nombre_objeto = "Peón negro";
-  identificador = 210;
+  identificador = 1200;
   centro_oc = Tupla3f(0,0,0);
 
   agregar(new MaterialPeonNegro());
@@ -76,7 +74,7 @@ PeonNegro::PeonNegro() {
 
 PeonMadera::PeonMadera() {
   nombre_objeto = "Peón de madera";
-  identificador = 220;
+  identificador = 4820;
   centro_oc = Tupla3f(0,0,0);
 
   agregar(new MaterialPeonMadera());

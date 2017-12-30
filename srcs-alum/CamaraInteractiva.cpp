@@ -60,7 +60,7 @@ void CamaraInteractiva::calcularMarcoCamara() {
     MAT_Traslacion(0, 0, dist);
   Tupla3f o = Tupla3f(A(0,3), A(1,3), A(2,3));
 
-  std::cerr << "Origen en: " << o << std::endl;
+  // std::cerr << "Origen en: " << o << std::endl;
   
   mcv = MarcoCoordVista(o, aten, Tupla3f(0,1,0));
 }

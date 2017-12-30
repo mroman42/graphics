@@ -59,7 +59,7 @@ public:
   GLuint VBO_Crear(GLuint tipo, GLuint tamanio, GLvoid* puntero);
   
   // Constructor de una malla indexada
-  MallaInd() : color_r(0), color_g(0), color_b(0) {
+  MallaInd() : Objeto3D(), color_r(0), color_g(0), color_b(0) {
     vbos_creados = false; // por defecto, no están creados
     color_r = 0.0;
     color_g = 0.0;

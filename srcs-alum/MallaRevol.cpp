@@ -1,9 +1,9 @@
 #include "MallaRevol.hpp"
 
-MallaRevol::MallaRevol(const std::string& nombre_arch,
-		       const unsigned nperfiles,
-		       const bool crear_tapas,
-		       const bool cerrar_malla) : MallaInd() {
+MallaRevol::MallaRevol(const std::string& nombre_arch, const unsigned nperfiles,
+		       const bool crear_tapas, const bool cerrar_malla)
+  : MallaInd()
+{
   // Extrae los puntos que generarán los vértices.
   std::vector<float> plyv;
   ply::read_vertices(nombre_arch.c_str(), plyv);

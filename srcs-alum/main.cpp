@@ -323,7 +323,8 @@ void FGE_PulsarTeclaEspecial( int tecla, int x_raton, int y_raton ) {
    using namespace std;
 
    // si se ha cambiado algo, forzar evento de redibujado
-   if (redisp) glutPostRedisplay();}
+   if (redisp) glutPostRedisplay();
+}
 
 
 // Función gestora de las pulsaciones de ratón

@@ -1,5 +1,7 @@
 #include "practica5.hpp"
 
+#include "jpg_readwrite.hpp"
+
 // El objeto jerárquico a visualizar se crea en memoria dinámica y se
 // guarda en una variable de la práctica.
 static ObjetoPractica4* objeto_practica_5 = nullptr;
@@ -18,6 +20,8 @@ static Viewport viewport;
 
 // Buffer de selección
 //static BufferSeleccion buffer;
+
+static bool modoArrastrar = false;
 
 
 void P5_Inicializar(int tamx, int tamy) {
@@ -172,6 +176,8 @@ bool P5_FGE_ClickRaton(int button, int state, int x, int y) {
     return P5_ClickIzquierdo(x,y);
   else if (button == GLUT_RIGHT_BUTTON and state == GLUT_DOWN)
     P5_InicioModoArrastrar(x,y);
+  else if (button == GLUT_RIGHT_BUTTON and state == GLUT_UP)
+    modoArrastrar = false;
 
   return true;
 }
@@ -181,6 +187,7 @@ bool P5_FGE_ClickRaton(int button, int state, int x, int y) {
 // examinar y devuelve true, en otro caso devuelve false
 bool P5_ClickIzquierdo(int x, int y) {
   // ???
+  std::cout << "Click izquierdo en: (" << x << ", " << y << ")" << std::endl;
 
   // Implementación con BufferSeleccion
   // // Calcular el objeto sobre el que se ha hecho click ???
@@ -195,24 +202,66 @@ bool P5_ClickIzquierdo(int x, int y) {
 
   // Implementamos la selección usando el frame-buffer trasero.
   // 1. Fijamos el color del fondo de pantalla a (0,0,0)
+  
 
   // 2. Activamos el modo selección y visualizamos la escena.
-  // objeto_practica_5 -> visualizarGL(cv);
+
+  // Visualiza la escena en modo selección sobre el buffer GL_BACK,
+  // desactivando todo lo que pueda ser conflictivo con los colores
+  // puros y limpiando previamente el buffer.
+  glBindFramebuffer(GL_FRAMEBUFFER, GL_BACK);
+  glDisable(GL_LIGHTING);
+  glDisable(GL_TEXTURE_2D);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  
+  ContextoVis cvsel;
+  cvsel.modoVisu = modoSeleccion;
+  objeto_practica_5 -> visualizarGL(cvsel);
+  glutPostRedisplay();
+
+  // Lee en la visualización en modo selección el pixel dado.
+  unsigned ident = LeerIdentEnPixel(x,glutGet(GLUT_WINDOW_HEIGHT) - y);
+  glBindFramebuffer(GL_FRAMEBUFFER, 0);
+  
+  std::cerr << "Identificador de pixel: " << ident << std::endl;
+
+  
+  
+  // GLint drawFboId = 0, readFboId = 0;
+  // glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &drawFboId);
+  // glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING, &readFboId);
+  // std::cout << "Current draw: " << drawFboId << std::endl;
+  // std::cout << "Current read: " << readFboId << std::endl;
+  
+
+  // // DEBUG: Exporta en una imagen
+  // unsigned char pixels[200*200*3] = {0};
+  // glReadPixels(x, y, 200, 200, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+  // std::string nombrearchivo = "./frame-test.jpg";
+  // jpg::JpegFile::RGBToJpegFile(nombrearchivo.c_str(), pixels,200,200,1,100);
+
+  // Devuelve el framebuffer
+
+  // glDeleteFramebuffers(1, fbo);
+
 
   // 3. Determinamos si se ha seleccionado algún objeto comprobando si
   // el color del pixel sobre el que se hace click es 0.
 
+  
   // 4. Caso de que no se haya encontrado objeto.
 
   // 5. Buscar por el identificador del objeto.
 
   // 6. Pasa la cámara al modo examinar en el objeto seleccionado.
   
-  return true;
+  return false;
 }
 
 // Entra en modo arrastrar, registra donde se ha iniciado el movimiento
 void P5_InicioModoArrastrar(int x, int y) {
+  modoArrastrar = true;
+  
   // Registra la posición de inicio del arrastre
   xant = x;
   yant = y;
@@ -223,7 +272,8 @@ bool P5_FGE_RatonMovidoPulsado(int x, int y) {
   // invoca la función de arrastre
   
   // ??? Cómo lo va a verificar
-  P5_RatonArrastradoHasta(x,y);
+  if (modoArrastrar)
+    P5_RatonArrastradoHasta(x,y);
 
   return true;
 }

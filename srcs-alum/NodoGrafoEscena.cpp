@@ -8,6 +8,10 @@ void NodoGrafoEscena::visualizarGL(ContextoVis& cv) {
   // Guarda el material actual
   cv.pilaMateriales.push();
 
+  // En el modo selección, coloca el color necesario
+  if (cv.modoVisu == modoSeleccion)
+    FijarColorIdent();
+
   for (EntradaNGE& entrada : entradas) {
     if (entrada.tipoE == 0) {
       // Si la entrada es un subobjeto, lo visualiza
