@@ -47,11 +47,11 @@ Lata::Lata() {
   centro_oc = Tupla3f(0,0,0);
   
   agregar(new MaterialLata());
-  agregar(new MallaRevol(archivo_lata_pcue, nperfiles, true, false));
+  agregar(new MallaRevol(archivo_lata_pcue, nperfiles, true, true));
   agregar(new MaterialTapasLata());
-  agregar(new MallaRevol(archivo_lata_pinf, nperfiles, true, false));
+  agregar(new MallaRevol(archivo_lata_pinf, nperfiles, true, true));
   agregar(MAT_Traslacion(0,0.025,0));
-  agregar(new MallaRevol(archivo_lata_psup, nperfiles, true, false));
+  agregar(new MallaRevol(archivo_lata_psup, nperfiles, true, true));
 }
 
 PeonBlanco::PeonBlanco() {
@@ -60,7 +60,7 @@ PeonBlanco::PeonBlanco() {
   centro_oc = Tupla3f(0,0,0);
 
   agregar(new MaterialPeonBlanco());
-  agregar(new MallaRevol(archivo_peon, nperfiles, true, false));
+  agregar(new MallaRevol(archivo_peon, nperfiles, true, true));
 }
 
 PeonNegro::PeonNegro() {
@@ -69,7 +69,7 @@ PeonNegro::PeonNegro() {
   centro_oc = Tupla3f(0,0,0);
 
   agregar(new MaterialPeonNegro());
-  agregar(new MallaRevol(archivo_peon, nperfiles, true, false));
+  agregar(new MallaRevol(archivo_peon, nperfiles, true, true));
 }
 
 PeonMadera::PeonMadera() {
@@ -78,7 +78,7 @@ PeonMadera::PeonMadera() {
   centro_oc = Tupla3f(0,0,0);
 
   agregar(new MaterialPeonMadera());
-  agregar(new MallaRevol(archivo_peon, nperfiles, true, false));
+  agregar(new MallaRevol(archivo_peon, nperfiles, true, true));
 }
 
 MaterialPeonMadera::MaterialPeonMadera() {
