@@ -1,0 +1,34 @@
+Prácticas IG 2017
+Sistema Operativo: GNU/Linux 4.13.12-1-ARCH
+
+
+Funcionalidades práctica 4:
+
+ - materiales en el grafo de práctica 4
+ - dos fuentes de luz en el grafo de la práctica 4
+ - materiales en el grafo de la práctica 3:
+   - material madera en el nodo Rotor
+   - material metal en el nodo Estructura
+   - material blanco en el nodo caballito
+
+Teclas práctica 4:
+
+ - g: conmuta entre ángulo alpha y beta de la fuente de luz
+ - <: aumenta el ángulo actual
+ - >: disminuye el ángulo actual
+
+Funcionalidades práctica 5:
+
+ - Cámara en modo examinar, control con teclado.
+ - Cámara en modo primera persona, control con teclado.
+ - Cámara en modo examinar, control con ratón.
+ - Cámara en modo primera persona, control con ratón.
+ - Selección con ratón para centrar sobre un objeto.
+
+Teclas práctica 5:
+
+ - c: cambia de cámara
+ - w: cambia entre modo examinar y primera persona. No se usa v porque está en uso para los VBO.
+ - +/(: acerca la cámara
+ - -/): aleja la cámara
+ - <flechas>: mueve la cámara
