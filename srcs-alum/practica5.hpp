@@ -3,7 +3,6 @@
 
 #include "practicas.hpp"
 #include "Objeto3D.hpp"
-#include "BufferSeleccion.hpp"
 #include "CamaraInteractiva.hpp"
 #include "ObjetoPractica4.hpp"
 #include "aux.hpp"

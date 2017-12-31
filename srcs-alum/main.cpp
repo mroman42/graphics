@@ -271,9 +271,11 @@ void FGE_PulsarTeclaNormal(unsigned char tecla, int x_raton, int y_raton) {
      
    case '+' :
      frustum_factor_escala *= 1.05;
+     if (practicaActual == 5) redibujar = P5_FGE_PulsarTeclaNormal(tecla);
      break;
    case '-' :
      frustum_factor_escala /= 1.05;
+     if (practicaActual == 5) redibujar = P5_FGE_PulsarTeclaNormal(tecla);
      break;
    default:
      // Variable que indica si es necesario redibujar.

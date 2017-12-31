@@ -29,12 +29,9 @@ void P5_Inicializar(int tamx, int tamy) {
   // la práctica 4.
   objeto_practica_5 = new ObjetoPractica4();
 
-  // Debería usar este ratio ???
+  // Usa el ratio de la ventana
   float ratio = ((float) tamy) / ((float) tamx);
   
-
-  // Inicializa la práctica 5 sobre una ventana
-
   // Crea las cámaras
   // 1. Perspectiva de alzado
   camaras.push_back(CamaraInteractiva(true, true, ratio, 0, 0, Tupla3f(0,0,0), 2, "Perspectiva de alzado"));
@@ -232,8 +229,6 @@ void P5_InicioModoArrastrar(int x, int y) {
 bool P5_FGE_RatonMovidoPulsado(int x, int y) {
   // Verifica si el botón pulsado es el botón derecho y en ese caso
   // invoca la función de arrastre
-  
-  // ??? Cómo lo va a verificar
   if (modoArrastrar)
     P5_RatonArrastradoHasta(x,y);
 

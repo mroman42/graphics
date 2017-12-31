@@ -63,7 +63,6 @@ bool NodoGrafoEscena::buscarObjeto(const int ident, const Matriz4f& mmodelado,
   // con su centro.
   if (identificador == ident) {
     *objeto = this;
-    // Habrá que multiplicar para calcular en coordenadas del mundo ???
     centro_wc = centro_oc;
     return true;
   }

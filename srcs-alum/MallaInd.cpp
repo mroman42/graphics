@@ -124,13 +124,11 @@ void MallaInd::visualizarGL_Seleccion(ContextoVis& cv) {
   glDisable(GL_LIGHTING);
   glDisable(GL_TEXTURE_2D);
 
-  // Se usa el mismo viewport y misma cámara actual (No está ya hecho ???)
-
   // Coloreamos el nodo antes de dibujarlo
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   FijarColorIdent();
 
-  // Habría que evitar que estuvieran activados materiales (???)
+  // Dibujamos
   glEnableClientState(GL_VERTEX_ARRAY);
   glVertexPointer(3, GL_FLOAT, 0, vertices[0]);
   glDrawElements(GL_TRIANGLES, caras.size()*3, GL_UNSIGNED_INT, caras[0]);

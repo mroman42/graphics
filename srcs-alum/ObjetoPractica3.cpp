@@ -33,6 +33,7 @@ Estructura::Estructura() {
   suelo->darColor(0.9,0.3,0.3);
   carpa->darColor(0.9,0.3,0.3);
 
+  agregar(new MaterialMetal());
   agregar(MAT_Traslacion(0,-0.05,0));
   agregar(MAT_Escalado(1.2,0.1,1.2));
   agregar(suelo);
@@ -45,7 +46,8 @@ Rotor::Rotor() {
   nombre_objeto = "Rotor";
   Objeto3D* base = new Base();
   NodoGrafoEscenaParam* columnas = new Columnas();
-  
+
+  agregar(new MaterialMadera());
   // Base inferior
   agregar(base);
   // Columnas
@@ -104,7 +106,9 @@ Poste::Poste(int num, float x,float z, float angle, int inicialmente) {
   agregar(Matriz4f(MAT_Traslacion(0,0.15 + inicialmente*0.15,0)));
   agregar(Matriz4f(MAT_Escalado(0.08,0.08,0.08)));
   agregar(Matriz4f(MAT_Rotacion(angle,0,1,0)));
+  agregar(new MaterialVaca());
   agregar(caballito);
+  agregar(new MaterialMadera());
 
   // Parámetro de traslación del caballito sobre el poste
   Matriz4f* ptr_matriz_traslacion_caballito = entradas[2].matriz;
@@ -143,4 +147,38 @@ Caballito::Caballito() {
   MallaInd* caballito = new MallaPLY("cow.ply");
   caballito->darColor(0.8,0.8,0.8);
   agregar(caballito);
+}
+
+
+MaterialMadera::MaterialMadera() {
+  // Textura del peón de madera
+  textura = new Textura();
+  textura->img = new jpg::Imagen("../imgs/text-madera.jpg");
+  textura->mgct = 0;
+  textura->cs = Tupla4f(1,0,0,0);
+  textura->ct = Tupla4f(0,1,0,0);
+
+  color[0] = Tupla4f(0.6,0.6,0.6,0.1);
+  color[1] = Tupla4f(0.1,0.1,0.1,0.1);
+  color[2] = Tupla4f(0.1,0.1,0.1,1);
+  color[3] = Tupla4f(1,1,1,1);
+  exponente = 100;
+}
+
+MaterialMetal::MaterialMetal() {
+  textura = nullptr;
+  color[0] = Tupla4f(0.2,0.1,0.1,0.1);
+  color[1] = Tupla4f(0.2,0.1,0.1,0.1);
+  color[2] = Tupla4f(0.2,0.1,0.1,1);
+  color[3] = Tupla4f(1,1,1,1);
+  exponente = 50;
+}
+
+MaterialVaca::MaterialVaca() {
+  textura = nullptr;
+  color[0] = Tupla4f(0.5,0.5,0.5,0.1);
+  color[1] = Tupla4f(0.1,0.1,0.1,0.1);
+  color[2] = Tupla4f(0.1,0.1,0.1,1);
+  color[3] = Tupla4f(1,1,1,1);
+  exponente = 50;
 }

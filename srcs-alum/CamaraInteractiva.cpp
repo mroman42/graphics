@@ -29,9 +29,7 @@ CamaraInteractiva::CamaraInteractiva(bool pexaminar, bool pperspectiva, int prat
 
 void CamaraInteractiva::calcularViewfrustum() {
   // Lee perspectiva, dist, ratio_yx_vp
-
-  // Qué plano de recorte elegir ???
-  // Puede jugarse con el plano de recorte para solucionar el ratio ???  
+  // Elige un plano de recorte
   const float near = 0.01;
   const float far  = 200;
   
