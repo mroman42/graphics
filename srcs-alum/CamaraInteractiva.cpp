@@ -6,7 +6,7 @@ static const float udesp = 0.1;
 static const float udespv = 0.2;
 // Unidad de rotación. Un real en radianes positivo que podrá
 // ajustarse para que el uso de la cámara sea cómodo.
-static const float urot = 3;
+static const float urot = 10;
 // Porcentaje de exceso de distancia. Puede ajustarse para que sea más
 // cómoda la navegación.
 static const float porc = 4;
@@ -19,11 +19,11 @@ CamaraInteractiva::CamaraInteractiva(bool pexaminar, bool pperspectiva, int prat
   : examinar(pexaminar), perspectiva(pperspectiva), ratio_yx_vp(pratio),
     longi(plongi), lati(plati), aten(paten), dist(pdist)
 {
+  // Inicialización de marco y frustum
   nombre = pnombre;
-  
-  // Distancia inicial para todas las cámaras
   calcularMarcoCamara();
   calcularViewfrustum();
+  upcoeff = 1;
 }
 
 
@@ -32,19 +32,17 @@ void CamaraInteractiva::calcularViewfrustum() {
 
   // Qué plano de recorte elegir ???
   // Puede jugarse con el plano de recorte para solucionar el ratio ???  
-  const float hfovy = 45;
   const float near = 0.01;
   const float far  = 200;
   
-  // Crea view-frustum perspectiva  
+  // Crea view-frustum perspectivo u ortográfico
   if (perspectiva) {
-    vf = ViewFrustum(hfovy, ratio_yx_vp, near, far);
+    const float hfovy = 45;
+    // Hay que invertir aquí el ratio_yx_vp (?)
+    vf.perspectivo(hfovy, 1/ratio_yx_vp, near, far);
   }
-  
-  // Crea view-frustum ortográfico
-  else {
-    vf = ViewFrustum(dist, near, far);
-  }
+  else
+    vf.ortografico(dist, 1/ratio_yx_vp, near, far);
 }
 
 void CamaraInteractiva::calcularMarcoCamara() {
@@ -58,11 +56,16 @@ void CamaraInteractiva::calcularMarcoCamara() {
   Matriz4f A =
     MAT_Traslacion(aten[0], aten[1], aten[2]) *
     MAT_Rotacion(longi, 0, 1, 0) *
-    MAT_Rotacion(-lati, 1, 0, 0) *
+    MAT_Rotacion(lati, 1, 0, 0) *
     MAT_Traslacion(0, 0, dist);
   Tupla3f orig = Tupla3f(A(0,3), A(1,3), A(2,3));
+
+  // Signo que mide si hay que dar la vuelta a la cámara una vez hemos
+  // dado media vuelta con la latitud.
+  if (cos(lati / 180.0 * M_PI) > 0) upcoeff = 1;
+  if (cos(lati / 180.0 * M_PI) < 0) upcoeff = -1;
   
-  mcv = MarcoCoordVista(orig, aten, Tupla3f(0,1,0));
+  mcv = MarcoCoordVista(orig, aten, Tupla3f(0,upcoeff,0));
 }
 
 void CamaraInteractiva::moverHV(int nh, int nv) {
@@ -71,6 +74,7 @@ void CamaraInteractiva::moverHV(int nh, int nv) {
     // se mira
     longi += nh * urot;
     lati  += nv * urot;
+    std::cerr << "Long,Lat: (" << longi << "," << lati << ")" << std::endl;
   }
   else {
     // En primera persona desplaza la atención sobre los ejes del marco

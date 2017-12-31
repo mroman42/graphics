@@ -6,20 +6,15 @@
 // Parámetros de transformación de la proyección
 class ViewFrustum {
 public:
-  bool persp;
-  float left;
-  float right;
-  float bottom;
-  float top;
-  float near;
-  float far;
   Matriz4f matrizProy;
 
-  // Crea view-frustum ortográfico
-  ViewFrustum(float dist = 1);
+  // Crea view-frustum
+  ViewFrustum();
 
-  // Crea view-frustum perspectiva
-  ViewFrustum(float hfovy, float aspect, float zNear, float zFar);
+  // Calcula la matriz de proyección asumiendo view-frustum proyectivo
+  // o asumiéndolo ortográfico.
+  void perspectivo(float hfovy, float aspect, float zNear, float zFar);
+  void ortografico(float dist, float aspect, float zNear, float zFar);
 };
 
 #endif

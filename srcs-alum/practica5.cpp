@@ -31,6 +31,7 @@ void P5_Inicializar(int tamx, int tamy) {
 
   // Debería usar este ratio ???
   float ratio = ((float) tamy) / ((float) tamx);
+  
 
   // Inicializa la práctica 5 sobre una ventana
 
@@ -42,7 +43,7 @@ void P5_Inicializar(int tamx, int tamy) {
   // 3. Perspectiva de planta
   camaras.push_back(CamaraInteractiva(true, true, ratio, 0, 90, Tupla3f(0,0,0), 2, "Perspectiva de planta"));
   // 4. Ortográfica de alzado
-  camaras.push_back(CamaraInteractiva(false, false, ratio, 0, 0, Tupla3f(0,0,0), 1, "Ortográfica"));
+  camaras.push_back(CamaraInteractiva(true, false, ratio, 90, 0, Tupla3f(0,0,0), 1, "Ortográfica"));
 
   // Crea el viewport con los parámetros que ha recibido desde main
   viewport = Viewport(0,0,tamx,tamy);
@@ -254,9 +255,16 @@ void P5_RatonArrastradoHasta(int x, int y) {
 void P5_FijarMVPOpenGL(int vpx, int vpy) {
   // Actualiza el Viewport y cambia el ratio del viewfrustum de la
   // cámara; con esto, fija matrices en OpenGL.
+  
   viewport = Viewport(0,0,vpx,vpy);
   viewport.fijarViewport(); // ??? tiene sentido usar el viewport así?
-  camaras[camaraActiva].ratio_yx_vp = ((float) vpy) / ((float) vpx);
+
+  float ratio = ((float) vpy) / ((float) vpx);
+  std::cerr << "Ventana x: " << vpx << std::endl;
+  std::cerr << "Ventana y: " << vpy << std::endl;
+  std::cerr << "Ratio: " << ratio << std::endl;
+  
+  camaras[camaraActiva].ratio_yx_vp = ratio;
   camaras[camaraActiva].calcularViewfrustum();
   camaras[camaraActiva].fijarMVPogl();
 }

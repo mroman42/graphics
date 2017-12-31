@@ -4,6 +4,11 @@
 #include "Camara.hpp"
 
 class CamaraInteractiva : public Camara {
+private:
+  // Signo que mide si hay que dar la vuelta a la cámara una vez hemos
+  // dado media vuelta con la latitud.
+  int upcoeff;
+  
 public:
   // Parámetros de la cámara
   bool examinar; // True si se está en modo examinar, False en primera persona
