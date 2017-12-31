@@ -41,7 +41,7 @@ void P5_Inicializar(int tamx, int tamy) {
   // 2. Perspectiva de perfil
   camaras.push_back(CamaraInteractiva(true, true, ratio, 90, 0, Tupla3f(0,0,0), 2, "Perspectiva de perfil"));
   // 3. Perspectiva de planta
-  camaras.push_back(CamaraInteractiva(true, true, ratio, 0, 90, Tupla3f(0,0,0), 2, "Perspectiva de planta"));
+  camaras.push_back(CamaraInteractiva(true, true, ratio, 0, -90, Tupla3f(0,0,0), 2, "Perspectiva de planta"));
   // 4. Ortográfica de alzado
   camaras.push_back(CamaraInteractiva(true, false, ratio, 90, 0, Tupla3f(0,0,0), 1, "Ortográfica"));
 
@@ -207,7 +207,6 @@ bool P5_ClickIzquierdo(int x, int y) {
   
   std::cerr << "Identificador de pixel: " << ident << std::endl;
   
-
   // Determinamos si se ha seleccionado algún objeto y centramos.
   Objeto3D* encontrado = nullptr;
   Tupla3f centro = Tupla3f(0,0,0);
@@ -215,9 +214,9 @@ bool P5_ClickIzquierdo(int x, int y) {
   if (objeto_practica_5 -> buscarObjeto(ident, devuelta, &encontrado, centro)) {
     std::cerr << "Seleccionado: " << encontrado -> nombre() << std::endl;
     camaras[camaraActiva].modoExaminar(centro);
+    return true;
   }
 
-  // ???
   return false;
 }
 
@@ -255,15 +254,13 @@ void P5_RatonArrastradoHasta(int x, int y) {
 void P5_FijarMVPOpenGL(int vpx, int vpy) {
   // Actualiza el Viewport y cambia el ratio del viewfrustum de la
   // cámara; con esto, fija matrices en OpenGL.
-  
   viewport = Viewport(0,0,vpx,vpy);
-  viewport.fijarViewport(); // ??? tiene sentido usar el viewport así?
+  viewport.fijarViewport();
 
-  float ratio = ((float) vpy) / ((float) vpx);
-  std::cerr << "Ventana x: " << vpx << std::endl;
-  std::cerr << "Ventana y: " << vpy << std::endl;
-  std::cerr << "Ratio: " << ratio << std::endl;
-  
+  // std::cerr << "Ventana x: " << vpx << std::endl;
+  // std::cerr << "Ventana y: " << vpy << std::endl;
+  // std::cerr << "Ratio: " << ratio << std::endl;
+  float ratio = ((float) vpy) / ((float) vpx);  
   camaras[camaraActiva].ratio_yx_vp = ratio;
   camaras[camaraActiva].calcularViewfrustum();
   camaras[camaraActiva].fijarMVPogl();

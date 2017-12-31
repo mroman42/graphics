@@ -8,6 +8,10 @@ void MallaInd::visualizarGL(ContextoVis& cv) {
       cv.modoVisu == modoAlambre or
       cv.modoVisu == modoSolido) {
 
+    // Desactiva la iluminación y las texturas
+    glDisable(GL_LIGHTING);
+    glDisable(GL_TEXTURE_2D);
+
     // Escoge el modo de visualización dentro de los tres modos posibles
     // desde este punto. La variable se usará en "glPolygonMode".
     auto polygonmode = GL_POINT;
@@ -53,6 +57,10 @@ void MallaInd::visualizarGL(ContextoVis& cv) {
 
   // Modo ajedrez
   else if (cv.modoVisu == modoAjedrez) {
+    // Desactiva la iluminación y las texturas
+    glDisable(GL_LIGHTING);
+    glDisable(GL_TEXTURE_2D);
+    
     // Separa en caras pares e impares
     std::vector<Tupla3i> caras_pares, caras_impares;
     for (unsigned int i=0; i<caras.size(); i++)
