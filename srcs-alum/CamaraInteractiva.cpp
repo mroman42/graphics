@@ -46,12 +46,8 @@ void CamaraInteractiva::calcularViewfrustum() {
 }
 
 void CamaraInteractiva::calcularMarcoCamara() {
-  // Lee longi, lati, dist, aten
-  // ???
-  // Pasar pfoco, paten, pvup
-
-  // Parámetros de gluLookAt
-  // Cálculo del marco de vista
+  // Lee longi, lati, dist, aten y devuelve foco, aten, up.
+  // El cálculo del marco de vista:
   //  A = Tra[aten] * Rot_y[long] * Rot_x[-lati] * Tra[0,0,dist]
   Matriz4f A =
     MAT_Traslacion(aten[0], aten[1], aten[2]) *
