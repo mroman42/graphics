@@ -2,7 +2,7 @@ Prácticas IG 2017
 Sistema Operativo: GNU/Linux 4.13.12-1-ARCH
 
 
-Funcionalidades práctica 4:
+Funcionalidades práctica 4 (sólo las indicadas en el guion):
 
  - materiales en el grafo de práctica 4
  - dos fuentes de luz en el grafo de la práctica 4
@@ -17,7 +17,7 @@ Teclas práctica 4:
  - <: aumenta el ángulo actual
  - >: disminuye el ángulo actual
 
-Funcionalidades práctica 5:
+Funcionalidades práctica 5 (sólo las indicadas en el guion):
 
  - Cámara en modo examinar, control con teclado.
  - Cámara en modo primera persona, control con teclado.
