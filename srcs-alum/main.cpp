@@ -257,7 +257,7 @@ void FGE_PulsarTeclaNormal(unsigned char tecla, int x_raton, int y_raton) {
      break;
    case 'Q': case 27:
      exit(0); break;
-   case 'V': case 'v':
+   case 'W': case 'w':
      // Cambia el modo diferido
      if (contextoVis.modoVbos) {
        contextoVis.modoVbos = false;
