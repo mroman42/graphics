@@ -35,8 +35,8 @@ void CamaraInteractiva::calcularViewfrustum() {
   
   // Crea view-frustum perspectivo u ortográfico
   if (perspectiva) {
-    const float hfovy = 45;
-    // Hay que invertir aquí el ratio_yx_vp (?)
+    // Hay que invertir aquí el ratio_yx_vp
+    const float hfovy = 45; // Seleccionamos un hfovy constante
     vf.perspectivo(hfovy, 1/ratio_yx_vp, near, far);
   }
   else
@@ -44,6 +44,12 @@ void CamaraInteractiva::calcularViewfrustum() {
 }
 
 void CamaraInteractiva::calcularMarcoCamara() {
+  // Normaliza longitud y latitud en el rango (0,360)
+  while (longi > 360) longi -= 360;
+  while (longi < 0) longi += 360;
+  while (lati > 360) lati -= 360;
+  while (lati < 0) lati += 360;
+  
   // Lee longi, lati, dist, aten y devuelve foco, aten, up.
   // El cálculo del marco de vista:
   //  A = Tra[aten] * Rot_y[long] * Rot_x[-lati] * Tra[0,0,dist]
@@ -56,8 +62,9 @@ void CamaraInteractiva::calcularMarcoCamara() {
 
   // Signo que mide si hay que dar la vuelta a la cámara una vez hemos
   // dado media vuelta con la latitud.
-  if (cos(lati / 180.0 * M_PI) > 0) upcoeff = 1;
-  if (cos(lati / 180.0 * M_PI) < 0) upcoeff = -1;
+  if (cos(lati / 180.0 * M_PI) >= 0) upcoeff = 1;
+  if (cos(lati / 180.0 * M_PI) <= 0) upcoeff = -1;
+  // std::cerr << "upcoeff: " << upcoeff << "  longi: " << longi << "  lati: " << lati << std::endl;
   
   mcv.recalcular(orig, aten, Tupla3f(0,upcoeff,0));
 }

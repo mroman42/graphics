@@ -37,6 +37,6 @@ void MarcoCoordVista::recalcular (const Tupla3f& pfoco, const Tupla3f& paten, co
     matrizML = MAT_LookAt(pfoco, paten, pvup);
   }
   else {
-    std::cerr << "Evita recalcular" << std::endl;
+    std::cerr << "Evita recalcular el marco" << std::endl;
   }
 }

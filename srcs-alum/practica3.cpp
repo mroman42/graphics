@@ -64,7 +64,7 @@ bool P3_FGE_PulsarTeclaNormal(unsigned char tecla) {
     // de libertad actual.
     if (p3_animaciones) {
       objeto_practica_3->leerPtrParametro(grado_libertad_actual)->acelerar();
-      std::cerr << "Velocidad actual: "
+      std::cout << "Velocidad actual: "
 		<< objeto_practica_3->leerPtrParametro(grado_libertad_actual)->leer_velocidad_actual()
                 << std::endl;
     }
@@ -72,7 +72,7 @@ bool P3_FGE_PulsarTeclaNormal(unsigned char tecla) {
     // libertad actual.
     else {
       objeto_practica_3->leerPtrParametro(grado_libertad_actual)->incrementar();
-      std::cerr << "Valor actual: "
+      std::cout << "Valor actual: "
 		<< objeto_practica_3->leerPtrParametro(grado_libertad_actual)->leer_valor_actual()
 	        << std::endl;
     }
@@ -83,7 +83,7 @@ bool P3_FGE_PulsarTeclaNormal(unsigned char tecla) {
     // de libertad actual.
     if (p3_animaciones) {
       objeto_practica_3->leerPtrParametro(grado_libertad_actual)->decelerar();
-      std::cerr << "Velocidad actual: "
+      std::cout << "Velocidad actual: "
 		<< objeto_practica_3->leerPtrParametro(grado_libertad_actual)->leer_velocidad_actual()
                 << std::endl;
     }
@@ -91,7 +91,7 @@ bool P3_FGE_PulsarTeclaNormal(unsigned char tecla) {
     // libertad actual.
     else {
       objeto_practica_3->leerPtrParametro(grado_libertad_actual)->decrementar();
-      std::cerr << "Valor actual: "
+      std::cout << "Valor actual: "
 		<< objeto_practica_3->leerPtrParametro(grado_libertad_actual)->leer_valor_actual()
 	        << std::endl;
     }

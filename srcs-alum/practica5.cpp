@@ -202,14 +202,14 @@ bool P5_ClickIzquierdo(int x, int y) {
   unsigned ident = LeerIdentEnPixel(x,glutGet(GLUT_WINDOW_HEIGHT) - y);
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
   
-  std::cerr << "Identificador de pixel: " << ident << std::endl;
+  std::cout << "Identificador de pixel: " << ident << std::endl;
   
   // Determinamos si se ha seleccionado algún objeto y centramos.
   Objeto3D* encontrado = nullptr;
   Tupla3f centro = Tupla3f(0,0,0);
   Matriz4f devuelta = MAT_Ident();
   if (objeto_practica_5 -> buscarObjeto(ident, devuelta, &encontrado, centro)) {
-    std::cerr << "Seleccionado: " << encontrado -> nombre() << std::endl;
+    std::cout << "Seleccionado: " << encontrado -> nombre() << std::endl;
     camaras[camaraActiva].modoExaminar(centro);
     return true;
   }
@@ -252,9 +252,6 @@ void P5_FijarMVPOpenGL(int vpx, int vpy) {
   viewport = Viewport(0,0,vpx,vpy);
   viewport.fijarViewport();
 
-  // std::cerr << "Ventana x: " << vpx << std::endl;
-  // std::cerr << "Ventana y: " << vpy << std::endl;
-  // std::cerr << "Ratio: " << ratio << std::endl;
   float ratio = ((float) vpy) / ((float) vpx);  
   camaras[camaraActiva].ratio_yx_vp = ratio;
   camaras[camaraActiva].calcularViewfrustum();
