@@ -28,7 +28,7 @@ Funcionalidades práctica 5 (sólo las indicadas en el guion):
 Teclas práctica 5:
 
  - c: cambia de cámara
- - w: cambia entre modo examinar y primera persona. No se usa v porque está en uso para los VBO.
+ - v: cambia entre modo examinar y primera persona.
  - +/(: acerca la cámara
  - -/): aleja la cámara
  - <flechas>: mueve la cámara
