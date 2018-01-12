@@ -17,6 +17,9 @@ public:
   Tupla4f ct;       // Coeficientes (T) para generar coeficientes de textura
 
   void activar(); // Activa la textura
+
+  // Constructor estándar, inicializa valores
+  Textura() : idText(0), img(nullptr), mgct(0) {};
 };
 
 #endif

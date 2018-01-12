@@ -2,23 +2,27 @@
 #include "aux.hpp"
 
 void Textura::activar() {
-  // Especificación de los texels en la imagen de la textura
-  uint tamx = img -> tamX(); // Número de columnas de la imagen
-  uint tamy = img -> tamY(); // Número de filas de la imagen
-  unsigned char* texels = img -> leerPixels(); // Puntero a los texels
+  // Para activar una textura tenemos dos casos, si el identificador
+  // no ha sido creado todavía, la textura tendrá que reservar uno y
+  // cargar ahí los texels; si está ya reservado, simplemente se
+  // activa.
+  if (idText == 0) {
+    // Especificación de los texels en la imagen de la textura
+    uint tamx = img -> tamX(); // Número de columnas de la imagen
+    uint tamy = img -> tamY(); // Número de filas de la imagen
+    unsigned char* texels = img -> leerPixels(); // Puntero a los texels
 
-  // Genera identificador y activa la textura
-  glGenTextures(1, &idText);
-  glEnable(GL_TEXTURE_2D);
-  glBindTexture(GL_TEXTURE_2D, idText);
-  gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, tamx, tamy, GL_RGB, GL_UNSIGNED_BYTE, texels);
-  // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tamx, tamy, 0, GL_RGB, GL_UNSIGNED_BYTE, texels);
-
-  // Parámetros de textura
-  // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-  // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-  // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-  // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // Genera identificador y activa la textura
+    glGenTextures(1, &idText);
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, idText);
+    gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, tamx, tamy, GL_RGB, GL_UNSIGNED_BYTE, texels);
+  }
+  else {
+    // Cuando el identificador está ya generado
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, idText);    
+  }
 
   // Generación procedural de las coordenadas de textura
   if (mgct == 1) {
@@ -36,6 +40,7 @@ void Textura::activar() {
     glEnable(GL_TEXTURE_GEN_T);
   }
   else {
+    // Deshabilitada
     glDisable(GL_TEXTURE_GEN_S);
     glDisable(GL_TEXTURE_GEN_T);
   }
