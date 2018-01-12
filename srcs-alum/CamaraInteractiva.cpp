@@ -68,7 +68,6 @@ void CamaraInteractiva::moverHV(int nh, int nv) {
     // se mira
     longi += nh * urot;
     lati  += nv * urot;
-    std::cerr << "Long,Lat: (" << longi << "," << lati << ")" << std::endl;
   }
   else {
     // En primera persona desplaza la atención sobre los ejes del marco
