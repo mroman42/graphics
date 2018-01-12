@@ -59,7 +59,7 @@ void CamaraInteractiva::calcularMarcoCamara() {
   if (cos(lati / 180.0 * M_PI) > 0) upcoeff = 1;
   if (cos(lati / 180.0 * M_PI) < 0) upcoeff = -1;
   
-  mcv = MarcoCoordVista(orig, aten, Tupla3f(0,upcoeff,0));
+  mcv.recalcular(orig, aten, Tupla3f(0,upcoeff,0));
 }
 
 void CamaraInteractiva::moverHV(int nh, int nv) {

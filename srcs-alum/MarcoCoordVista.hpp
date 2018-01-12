@@ -16,11 +16,14 @@ public:
   // Crea un marco de coordenadas en el origen mirando a Z-
   MarcoCoordVista();
 
-  // Constructor con parámetros iguales a gluLookAt
+  // Constructor con parámetros iguales a gluLookAt.
   // pfoco: posición del ojo
   // paten: posición del punto de referencia, al que se atiende
   // pvup:  posición dirección
   MarcoCoordVista(const Tupla3f& pfoco, const Tupla3f& paten, const Tupla3f& pvup);
+
+  // Recalcula el marco de coordenadas con parámetros iguales a gluLookAt.
+  void recalcular(const Tupla3f& pfoco, const Tupla3f& paten, const Tupla3f& pvup);
 };
 
 #endif
