@@ -1,5 +1,8 @@
 #include "ObjetoPractica3.hpp"
 
+static NodoGrafoEscenaParam* caballito = new Caballito();
+static NodoGrafoEscenaParam* columna = new Columna();
+
 ObjetoPractica3::ObjetoPractica3() {
   // Nombra el objeto
   nombre_objeto = "Escena de la práctica 3";
@@ -70,7 +73,6 @@ Base::Base() {
 
 Columnas::Columnas() {
   nombre_objeto = "Estructura de columnas";
-  NodoGrafoEscenaParam* columna_central = new Columna();
   NodoGrafoEscenaParam* poste_1 = new Poste(1,0,0.4,0,1);
   NodoGrafoEscenaParam* poste_2 = new Poste(2,0,-0.4,180,-1);
   NodoGrafoEscenaParam* poste_3 = new Poste(3,0.34641016151377546,0.2,60,0);
@@ -78,7 +80,7 @@ Columnas::Columnas() {
   NodoGrafoEscenaParam* poste_5 = new Poste(5,-0.34641016151377546,0.2,300,-1);
   NodoGrafoEscenaParam* poste_6 = new Poste(6,-0.34641016151377546,-0.2,240,0);
 
-  agregar(columna_central);
+  agregar(columna);
   agregar(poste_1);
   agregar(poste_2);
   agregar(poste_3);
@@ -98,11 +100,9 @@ Columnas::Columnas() {
 Poste::Poste(int num, float x,float z, float angle, int inicialmente) {
   nombre_objeto = "poste " + std::to_string(num);
   
-  NodoGrafoEscenaParam* columna = new Columna();
   agregar(Matriz4f(MAT_Traslacion(x,0,z)));
   agregar(columna);
 
-  NodoGrafoEscenaParam* caballito = new Caballito();
   agregar(Matriz4f(MAT_Traslacion(0,0.15 + inicialmente*0.15,0)));
   agregar(Matriz4f(MAT_Escalado(0.08,0.08,0.08)));
   agregar(Matriz4f(MAT_Rotacion(angle,0,1,0)));
