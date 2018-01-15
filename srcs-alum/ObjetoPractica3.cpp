@@ -2,20 +2,19 @@
 
 static NodoGrafoEscenaParam* caballito = new Caballito();
 static NodoGrafoEscenaParam* columna = new Columna();
+static NodoGrafoEscenaParam* estructura = new Estructura();
+static NodoGrafoEscenaParam* rotor = new Rotor();
 
 ObjetoPractica3::ObjetoPractica3() {
   // Nombra el objeto
   nombre_objeto = "Escena de la práctica 3";
 
   // Estructura exterior del tiovivo
-  NodoGrafoEscenaParam* estructura = new Estructura();
   agregar(estructura);
   
   // Rotor principal
   agregar(Matriz4f(MAT_Rotacion(0.0, 0.0, 1.0, 0.0)));
-  NodoGrafoEscenaParam* rotor = new Rotor();
   agregar(rotor);
-  
   
   // Parámetro de rotación general
   Matriz4f* ptr_matriz_rotacion_base = entradas[1].matriz;

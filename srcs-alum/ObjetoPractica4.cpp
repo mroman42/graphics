@@ -6,7 +6,8 @@ static const int nperfiles = 61;
 static const std::string archivo_peon = "../plys/peon.ply";
 static const std::string archivo_lata_pcue = "../plys/lata-pcue.ply";
 static const std::string archivo_lata_psup = "../plys/lata-psup.ply";
-static const std::string archivo_lata_pinf = "../plys/lata-pinf.ply";  
+static const std::string archivo_lata_pinf = "../plys/lata-pinf.ply";
+static NodoGrafoEscena* peon = new Peon();
 
 ObjetoPractica4::ObjetoPractica4() {
   // Datos globales de la escena
@@ -60,7 +61,7 @@ PeonBlanco::PeonBlanco() {
   centro_oc = Tupla3f(0,0,0);
 
   agregar(new MaterialPeonBlanco());
-  agregar(new MallaRevol(archivo_peon, nperfiles, true, true));
+  agregar(peon);
 }
 
 PeonNegro::PeonNegro() {
@@ -69,7 +70,7 @@ PeonNegro::PeonNegro() {
   centro_oc = Tupla3f(0,0,0);
 
   agregar(new MaterialPeonNegro());
-  agregar(new MallaRevol(archivo_peon, nperfiles, true, true));
+  agregar(peon);
 }
 
 PeonMadera::PeonMadera() {
@@ -78,6 +79,11 @@ PeonMadera::PeonMadera() {
   centro_oc = Tupla3f(0,0,0);
 
   agregar(new MaterialPeonMadera());
+  agregar(peon);
+}
+
+Peon::Peon() {
+  nombre_objeto = "Peón";
   agregar(new MallaRevol(archivo_peon, nperfiles, true, true));
 }
 
