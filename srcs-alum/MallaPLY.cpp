@@ -1,11 +1,12 @@
 #include "MallaPLY.hpp"
 
-MallaPLY::MallaPLY(const std::string& nombre_archivo) {
+MallaPLY::MallaPLY(const std::string& nombre_archivo) : MallaInd() {
   // Extrae los puntos para generar los vértices y las caras
   // desde el archivo PLY pasado como argumento.
   std::vector<float> plyv; // Puntos, leídos como flotantes
   std::vector<int> plyc;   // Caras, leídas como enteros
   ply::read(nombre_archivo.c_str(), plyv, plyc);
+  darColor(0.0,0.0,0.0);
 
   // Genera la malla organizando los puntos leídos en tuplas.
   // Organiza los vértices, cada tres flotantes forman una tupla

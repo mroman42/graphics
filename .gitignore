@@ -1,3 +1,7 @@
 /objs/*.o
 *.o
+test*
+notes/*
+*.zip
+old*
 /srcs-alum/prac

@@ -8,16 +8,29 @@
 #ifndef IG_PRACTICAS_HPP
 #define IG_PRACTICAS_HPP
 
+#include "PilaMateriales.hpp"
+#include "ParTransf.hpp"
 
 // tipo de datos enumerado para los modos de visualización:
-typedef enum {modoPuntos, modoAlambre, modoSolido, modoAjedrez} ModosVisu;
-const int numModosVisu = 4;
+typedef enum {
+  modoPuntos,
+  modoAlambre,
+  modoSolido,
+  modoAjedrez,
+  modoIluminacionPlano,
+  modoIluminacionSuave,
+  modoSeleccion
+} ModosVisu;
+const int numModosVisu = 7;
+
 
 // Contextos de visualización
 class ContextoVis {
 public:
   ModosVisu modoVisu; // modo de visualización actual
   bool modoVbos; // modo diferido para visualización de mallas
+  PilaMateriales pilaMateriales; // Pila de materiales
+  ParTransf pt; // Parámetros de transformación actuales
   
   ContextoVis() {
     modoVisu = modoAlambre; // poner alambre por defecto
