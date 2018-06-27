@@ -4,3 +4,4 @@ test*
 notes/*
 *.zip
 old*
+/srcs-alum/prac
